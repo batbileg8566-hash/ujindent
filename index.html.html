@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <title>ТАНАЙ ЭМНЭЛГИЙН НЭР – Шүдний эмнэлэг</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ТАНАЙ ЭМНЭЛГИЙН НЭР – шүд, амны хөндийн оношилгоо, эмчилгээ, урьдчилан сэргийлэлт.">
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --primary-light: #e3f2fd;
+            --accent: #00bfa5;
+            --text-main: #1f2933;
+            --text-muted: #6b7280;
+            --bg-light: #f5f7fb;
+            --border-soft: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--text-main);
+            background: #ffffff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Layout basics */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header / Nav */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), #4fc3f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text-title {
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: .02em;
+        }
+
+        .logo-text-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--primary);
+            transition: width .18s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 18px;
+        }
+
+        .btn-nav {
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            background: #1565c0;
+        }
+
+        .nav-toggle {
+            display: none;
+            border: 1px solid var(--border-soft);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 13px;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        /* Hero */
+        .hero {
+            background: radial-gradient(circle at top right, #e3f2fd, #ffffff 60%);
+            padding: 40px 0 50px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 32px;
+            align-items: center;
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .hero-title {
+            font-size: 30px;
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .btn-primary {
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+
+        .btn-ghost {
+            padding: 9px 18px;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: #fff;
+            color: var(--text-main);
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .hero-badge {
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            background: #fff;
+        }
+
+        .hero-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+            padding: 18px;
+        }
+
+        .hero-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .hero-card-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .hero-card-tag {
+            font-size: 11px;
+            color: #fff;
+            background: var(--accent);
+            border-radius: 999px;
+            padding: 4px 10px;
+        }
+
+        .hero-card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .hero-card-item {
+            padding: 10px;
+            border-radius: 12px;
+            background: var(--bg-light);
+        }
+
+        .hero-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .hero-value {
+            font-weight: 600;
+        }
+
+        .hero-hours {
+            margin-top: 14px;
+            border-top: 1px dashed var(--border-soft);
+            padding-top: 10px;
+            font-size: 12px;
+        }
+
+        /* Sections generic */
+        section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .service-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            padding: 14px;
+            font-size: 13px;
+        }
+
+        .service-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .service-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .service-desc {
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .service-price {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Doctors */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .doctor-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            padding: 14px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .doctor-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 999px;
+            background: var(--primary-light);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .doctor-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .doctor-role {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .doctor-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 24px;
+        }
+
+        .about-highlight {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .about-pill {
+            background: var(--primary-light);
+            border-radius: 12px;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .about-pill strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .about-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            padding: 14px;
+            font-size: 13px;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            gap: 22px;
+        }
+
+        .contact-card {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--border-soft);
+            padding: 14px;
+            font-size: 13px;
+        }
+
+        .contact-row {
+            margin-bottom: 8px;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .contact-value {
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .contact-chip {
+            padding: 7px 12px;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-chip span.icon {
+            font-size: 14px;
+        }
+
+        .contact-form label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .contact-form input,
+        .contact-form textarea,
+        .contact-form select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border-soft);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .map-placeholder {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            min-height: 220px;
+        }
+
+        .map-placeholder iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-soft);
+            padding: 16px 0;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        footer .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-grid,
+            .services-grid,
+            .doctors-grid,
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .hero {
+                padding-top: 24px;
+            }
+
+            .hero-title {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .services-grid,
+            .doctors-grid,
+            .about-highlight {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .hero-card {
+                margin-top: 4px;
+            }
+        }
+
+        /* Simple "open" for nav-links on small screen (very basic, no JS logic) */
+        @media (max-width: 720px) {
+            header.open .nav-links {
+                display: flex;
+                position: absolute;
+                top: 48px;
+                right: 16px;
+                background: #fff;
+                padding: 10px 14px;
+                border-radius: 14px;
+                box-shadow: 0 14px 30px rgba(15,23,42,0.18);
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <script>
+        // Жижигхэн: мобайл дээр menu-г нээж/хаах
+        document.addEventListener('DOMContentLoaded', function () {
+            var toggle = document.getElementById('navToggle');
+            var header = document.querySelector('header');
+            if (toggle && header) {
+                toggle.addEventListener('click', function () {
+                    if (header.classList.contains('open')) {
+                        header.classList.remove('open');
+                    } else {
+                        header.classList.add('open');
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="nav">
+            <div class="logo">
+                <div class="logo-icon">D</div>
+                <div>
+                    <div class="logo-text-title">ТАНАЙ ЭМНЭЛГИЙН НЭР</div>
+                    <div class="logo-text-sub">Шүд, амны хөндийн эмнэлэг</div>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#home">Нүүр</a>
+                <a href="#about">Манай тухай</a>
+                <a href="#services">Үйлчилгээ</a>
+                <a href="#doctors">Эмч нар</a>
+                <a href="#contact">Цаг авах</a>
+                <a href="#contact">
+                    <button class="btn-nav">☎ Цаг авах</button>
+                </a>
+            </nav>
+
+            <button id="navToggle" class="nav-toggle">
+                ☰ Меню
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-eyebrow">PREMIUM DENTAL CARE</div>
+                    <h1 class="hero-title">
+                        Таны инээмсэглэлд<br>
+                        <span>мэргэшсэн шүдний эмнэлэг</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        ТАНАЙ ЭМНЭЛГИЙН НЭР нь орчин үеийн оношилгоо, эмчилгээ, урьдчилан сэргийлэх тусламжийг
+                        <strong>аюулгүй, өвдөлт багатай</strong> аргаар үзүүлдэг шүдний эмнэлэг юм.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="#contact">
+                            <button class="btn-primary">Онлайн цаг авах</button>
+                        </a>
+                        <a href="tel:+976xxxxxxxx">
+                            <button class="btn-ghost">☎ +976 XX XX XXXX руу залгах</button>
+                        </a>
+                    </div>
+                    <div class="hero-badges">
+                        <div class="hero-badge">🦷 Туршлагатай эмч нар</div>
+                        <div class="hero-badge">✅ Нийцсэн халдвар хамгааллын дэглэм</div>
+                        <div class="hero-badge">📍 [Дүүрэг, хороо] байрлал</div>
+                    </div>
+                </div>
+
+                <aside class="hero-card">
+                    <div class="hero-card-header">
+                        <div>
+                            <div class="hero-card-title">Өнөөдрийн үзлэгийн цаг</div>
+                            <div style="font-size:12px; color: var(--text-muted);">
+                                Утас болон мессежээр урьдчилан цаг авбал тохиромжтой.
+                            </div>
+                        </div>
+                        <div class="hero-card-tag">Цагийн хуваарь</div>
+                    </div>
+                    <div class="hero-card-grid">
+                        <div class="hero-card-item">
+                            <div class="hero-label">Ажлын өдөр</div>
+                            <div class="hero-value">Даваа – Баасан</div>
+                            <div style="font-size:11px; color: var(--text-muted);">09:00 – 18:00</div>
+                        </div>
+                        <div class="hero-card-item">
+                            <div class="hero-label">Бямба</div>
+                            <div class="hero-value">10:00 – 16:00</div>
+                            <div style="font-size:11px; color: var(--text-muted);">Ням – Амарна</div>
+                        </div>
+                        <div class="hero-card-item">
+                            <div class="hero-label">Утас</div>
+                            <div class="hero-value">+976 XX XX XXXX</div>
+                            <div style="font-size:11px; color: var(--text-muted);">Цагийн захиалга, лавлагаа</div>
+                        </div>
+                        <div class="hero-card-item">
+                            <div class="hero-label">Хаяг</div>
+                            <div class="hero-value">Улаанбаатар хот</div>
+                            <div style="font-size:11px; color: var(--text-muted);">[Дүүрэг, хороо, байрны нэр]</div>
+                        </div>
+                    </div>
+                    <div class="hero-hours">
+                        <strong>Яаралтай үзлэг:</strong>
+                        <span style="color: var(--text-muted);">
+                            Боломжтой тохиолдолд урьдчилан утсаар холбогдоно уу.
+                        </span>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">Манай эмнэлгийн тухай</h2>
+            <p class="section-subtitle">
+                Бид бүрэн оношилгоонд үндэслэн, эрсдэлийг нарийвчлан үнэлж, таны амны хөндийн онцлогт тохируулсан эмчилгээний төлөвлөгөө боловсруулдаг.
+            </p>
+
+            <div class="about-grid">
+                <div>
+                    <p style="font-size:13px; line-height:1.6;">
+                        ТАНАЙ ЭМНЭЛГИЙН НЭР нь шүд, амны хөндийн эрүүл мэндийг
+                        <strong>урт хугацаанд</strong> хамгаалах зорилготой, бага өвдөлттэй, чанартай эмчилгээ хийхэд чиглэсэн.
+                        Өвчтөн бүрийн нас, шүдний байдал, амьдралын хэв маягийг харгалзан үзэж, тохирсон шийдлийг санал болгодог.
+                    </p>
+                    <p style="font-size:13px; line-height:1.6;">
+                        Бид нэг удаагийн эмчилгээ төдийгүй <strong>урьдчилан сэргийлэлт</strong>, тогтмол хяналтыг чухалчилж,
+                        зөв шүд арчилгааны зөвлөгөө, зөв дадлыг хэвшүүлэхэд тань тусална.
+                    </p>
+
+                    <div class="about-highlight">
+                        <div class="about-pill">
+                            <strong>🩺 Дэвшилтэт оношилгоо</strong>
+                            VATECH рентген төхөөрөмж, чанарын стандартад нийцсэн төхөөрөмжүүд.
+                        </div>
+                        <div class="about-pill">
+                            <strong>👨‍⚕️ Мэргэшсэн баг</strong>
+                            Туршлагатай эмч нарын баг нэг өвчтөн, нэг төлөвлөгөө зарчмаар ажиллана.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <div style="font-weight:600; margin-bottom:8px;">Эрхэм зорилго</div>
+                    <p style="font-size:13px; color:var(--text-muted); margin-bottom:10px;">
+                        Таны инээмсэглэлийг эрүүл, цэвэр, итгэлтэй байлгахын төлөө эрсдэл багатай, нотолгоонд суурилсан эмчилгээ хийх.
+                    </p>
+                    <ul style="padding-left:18px; margin:0; font-size:13px; color: var(--text-muted); line-height:1.6;">
+                        <li>Өвчтөн төвтэй, ойлгомжтой тайлбар бүхий үзлэг</li>
+                        <li>Цэвэрхэн, аюулгүй орчин, халдвар хамгааллын дэглэм</li>
+                        <li>Шаардлагатай эмчилгээг л зөвлөх, илүү зардал үүсгэхгүй байх</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" style="background: var(--bg-light);">
+        <div class="container">
+            <h2 class="section-title">Үйлчилгээ</h2>
+            <p class="section-subtitle">
+                Өдөр тутмын эмчилгээ, урьдчилан сэргийлэлтээс эхлээд нарийн мэргэжлийн тусламж хүртэл.
+                Дараах нь түгээмэл үйлчилгээний жишээ юм.
+            </p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🦷</div>
+                    <div class="service-title">Шүд цооролын эмчилгээ</div>
+                    <div class="service-desc">
+                        Эхний шатанд оношилж, шаардлагатай тохиолдолд мэдээ алдуулалттайгаар цоорлыг эмчилнэ.
+                    </div>
+                    <div class="service-price">Үнэ: эхлэх нь 60,000₮ ≈</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <div class="service-title">Шүдний цэвэрлэгээ, чулуу авах</div>
+                    <div class="service-desc">
+                        Шүдний чулуу, өнгөрийг тусгай төхөөрөмжөөр цэвэрлэж, пааланг гэмтээлгүй гялалзсан болгоно.
+                    </div>
+                    <div class="service-price">Үнэ: эхлэх нь 80,000₮ ≈</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">😬</div>
+                    <div class="service-title">Шүдний мэдрэгшил, өвдөлтийн эмчилгээ</div>
+                    <div class="service-desc">
+                        Мэдрэгшил, гүн цоорол, мэдрэл оролцсон өвдөлтийг оношилж, шат дараалсан эмчилгээ хийнэ.
+                    </div>
+                    <div class="service-price">Үнэ: оношлогооноос хамаарна</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">👶</div>
+                    <div class="service-title">Хүүхдийн шүдний эмчилгээ</div>
+                    <div class="service-desc">
+                        Хүүхдэд ээлтэй орчинд сэтгэлзүйн дарамтгүй, ойлгомжтой хэллэгээр эмчилгээ хийнэ.
+                    </div>
+                    <div class="service-price">Хүүхдийн үзлэг: 20,000₮ ≈</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🪥</div>
+                    <div class="service-title">Урьдчилан сэргийлэх үзлэг</div>
+                    <div class="service-desc">
+                        Хагас жил тутмын хяналт, зөв угаах дадал, амны хөндийн зөвлөгөө өгнө.
+                    </div>
+                    <div class="service-price">Үзлэг: 15,000₮ ≈</div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📸</div>
+                    <div class="service-title">Рентген оношилгоо (VATECH)</div>
+                    <div class="service-desc">
+                        Солонгос VATECH төхөөрөмжөөр шүд, эрүүний бүтэц, эмчилгээний төлөвлөгөөг нарийвчлан гаргана.
+                    </div>
+                    <div class="service-price">Үнэ: 15,000–25,000₮ ≈</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors -->
+    <section id="doctors">
+        <div class="container">
+            <h2 class="section-title">Эмч нар</h2>
+            <p class="section-subtitle">
+                Таны шүдийг даатгах мэргэжлийн баг.
+                Энд эмч бүрийн нэр, чиглэл, туршлагын талаар товч мэдээлэл байрлуулна.
+            </p>
+
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <div class="doctor-avatar">A</div>
+                    <div class="doctor-name">Эмчийн овог нэр</div>
+                    <div class="doctor-role">Ерөнхий шүдний эмч</div>
+                    <div class="doctor-meta">Ажилласан жил: 8+</div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-avatar">B</div>
+                    <div class="doctor-name">Эмчийн овог нэр</div>
+                    <div class="doctor-role">Хүүхдийн шүдний эмч</div>
+                    <div class="doctor-meta">Ажилласан жил: 5+</div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-avatar">C</div>
+                    <div class="doctor-name">Эмчийн овог нэр</div>
+                    <div class="doctor-role">Эмчилгээ, сувгийн эмч</div>
+                    <div class="doctor-meta">Ажилласан жил: 10+</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Appointment -->
+    <section id="contact" style="background: var(--bg-light);">
+        <div class="container">
+            <h2 class="section-title">Цаг авах &amp; Холбоо барих</h2>
+            <p class="section-subtitle">
+                Доорх формоор хүсэлт илгээх эсвэл утсаар шууд холбогдон цаг авч болно.
+                Жич: Одоогоор энэхүү форм нь жишээ хэлбэртэй, backend системтэй холбохыг дараа хийхээр төлөвлөсөн.
+            </p>
+
+            <div class="contact-grid">
+                <div class="contact-card contact-form">
+                    <form>
+                        <label>Нэр</label>
+                        <input type="text" name="name" placeholder="Таны нэр">
+
+                        <label>Утасны дугаар</label>
+                        <input type="tel" name="phone" placeholder="+976 ...">
+
+                        <label>Үйлчилгээ</label>
+                        <select name="service">
+                            <option value="">Сонгох...</option>
+                            <option value="checkup">Урьдчилан сэргийлэх үзлэг</option>
+                            <option value="caries">Шүд цооролын эмчилгээ</option>
+                            <option value="cleaning">Шүдний цэвэрлэгээ</option>
+                            <option value="kids">Хүүхдийн шүдний эмчилгээ</option>
+                        </select>
+
+                        <label>Хүсэж буй огноо</label>
+                        <input type="date" name="date">
+
+                        <label>Тайлбар</label>
+                        <textarea name="message" placeholder="Гол зовиур, асуух зүйлээ товч бичнэ үү."></textarea>
+
+                        <button type="submit" class="btn-primary" style="width:100%; margin-top:4px;">
+                            Илгээх (жишээ form)
+                        </button>
+                    </form>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-row">
+                        <div class="contact-label">Хаяг</div>
+                        <div class="contact-value">Улаанбаатар хот, [Дүүрэг], [Хороо], [Байрны нэр]</div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="contact-label">Утас</div>
+                        <div class="contact-value">+976 XX XX XXXX</div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="contact-label">Имэйл</div>
+                        <div class="contact-value">info@tanai-clinic.mn</div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="contact-label">Ажлын цаг</div>
+                        <div class="contact-value">
+                            Даваа – Баасан: 09:00 – 18:00<br>
+                            Бямба: 10:00 – 16:00, Ням – Амарна
+                        </div>
+                    </div>
+
+                    <div class="contact-links">
+                        <a href="https://facebook.com/" target="_blank" class="contact-chip">
+                            <span class="icon">📘</span> Facebook хуудас
+                        </a>
+                        <a href="https://m.me/" target="_blank" class="contact-chip">
+                            <span class="icon">💬</span> Messenger чат
+                        </a>
+                        <a href="tel:+976xxxxxxxx" class="contact-chip">
+                            <span class="icon">☎</span> Шууд залгах
+                        </a>
+                    </div>
+
+                    <div style="margin-top:14px;" class="map-placeholder">
+                        <!-- Энд Google Maps embed оруулж болно -->
+                        <!-- Жишээ iframe: Google Maps share -> Embed map -> iframe-г хуулж тавина -->
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb="
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div>© <span id="year"></span> ТАНАЙ ЭМНЭЛГИЙН НЭР – Шүд, амны хөндийн эмнэлэг.</div>
+            <div>Бүх эрх хуулиар хамгаалагдсан.</div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Он автоматаар шинэчилнэ
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
