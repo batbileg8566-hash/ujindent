@@ -3,259 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UJiN DeNT — Шүд, амны хөндийн эмнэлэг | Хан-Уул, Нисэх</title>
-<meta name="description" content="UJiN DeNT — шүд, амны хөндийн оношилгоо, эмчилгээ, урьдчилан сэргийлэлт. VATECH рентген, хүүхдийн эмчилгээ, онлайн цаг захиалга. Хан-Уул дүүрэг, Нисэхийн тойрог, Хан Плаза 3 давхарт. Утас: 8081-0058.">
+<title>Үжин Дент — Шүд, амны хөндийн эмнэлэг | Хан-Уул, Нисэх</title>
+<meta name="description" content="Үжин Дент (UJiN DeNT) — шүд, амны хөндийн оношилгоо, эмчилгээ, урьдчилан сэргийлэлт. VATECH рентген, хүүхдийн эмчилгээ, онлайн цаг захиалга. Хан-Уул, Нисэх, Хан Плаза 3 давхарт. Утас: 8081-0058.">
 <link rel="icon" href="logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ═══ Брэнд токенууд — логоноос ургуулсан: кремэн, алт, гүн хөх ═══ */
+  /* ═══ Үжин Дент — дагины уран зургаас ургуулсан палитр ═══
+     Зотон цагаан дэвсгэр, шүдний номин цэнхэр, гялтгар хүрэл-ягаан, алтан гялбаа */
   :root{
-    --ivory:#F8F4EA; --ivory-2:#FDFBF4;
-    --ink:#1C2B39; --ink-soft:#46586A;
-    --gold:#B8912F; --gold-2:#D5B45C; --gold-pale:#EFE5C8;
-    --teal:#2F7E80;
-    --line:#E6DEC9;
-    --shadow:0 14px 40px rgba(28,43,57,.10);
+    --bg:#FEFDFB;
+    --bg-2:#F6F4EF;          /* зотон (canvas) цагаан */
+    --ink:#3A3A42;           /* зөөлөн бараан */
+    --ink-soft:#7E7C84;
+    --peri:#89A7CE;          /* дагины барьж буй шүдний номин цэнхэр */
+    --peri-deep:#5B84B5;
+    --peri-pale:#EDF2F8;
+    --pink:#D9AB9E;          /* гялтгар хүрэл-ягаан */
+    --pink-pale:#F9F0EC;
+    --spark:#C9A24B;         /* алтан гялбаа */
+    --line:#EAE7DF;
+    --r:22px;
+    --shadow:0 20px 55px rgba(91,132,181,.14);
+    --tr:.25s cubic-bezier(.2,.7,.3,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--ivory-2);color:var(--ink);
-       font-family:'Golos Text','Segoe UI',system-ui,sans-serif;line-height:1.6;font-size:15.5px}
-  .serif{font-family:'Prata',Georgia,serif;font-weight:400}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:'Golos Text',system-ui,sans-serif;line-height:1.6;font-size:16px;
+       -webkit-font-smoothing:antialiased}
   a{color:inherit}
   img{max-width:100%;display:block}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  section{padding:84px 0}
+  @media(max-width:700px){section{padding:60px 0}}
 
-  .eyebrow{display:flex;align-items:center;gap:10px;font-size:11.5px;font-weight:700;
-           letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
-  .eyebrow::before{content:"✦";font-size:13px}
-  h2{font-family:'Prata',serif;font-weight:400;font-size:clamp(26px,3.6vw,38px);
-     line-height:1.25;margin:0 0 12px;letter-spacing:.01em}
-  .lead{color:var(--ink-soft);max-width:620px;margin:0 0 34px;font-size:15.5px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+          letter-spacing:.2em;text-transform:uppercase;color:var(--peri-deep);
+          background:var(--peri-pale);padding:7px 16px;border-radius:999px;margin-bottom:18px}
+  .kicker::before{content:"✦";color:var(--spark)}
+  h2{font-family:'Prata',serif;font-weight:400;font-size:clamp(27px,3.8vw,40px);
+     line-height:1.22;margin:0 0 12px}
+  .lead{color:var(--ink-soft);max-width:560px;margin:0 0 38px;font-size:16px}
 
-  .btn{display:inline-block;padding:14px 30px;border-radius:999px;font-weight:600;font-size:15px;
-       cursor:pointer;border:none;font-family:inherit;text-decoration:none;text-align:center;
-       transition:background .15s,color .15s}
-  .btn-gold{background:var(--ink);color:var(--ivory)}
-  .btn-gold:hover{background:var(--gold);color:#fff}
-  .btn-line{background:transparent;color:var(--ink);border:1.5px solid var(--gold)}
-  .btn-line:hover{background:var(--gold-pale)}
-  button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-  [disabled]{opacity:.4;cursor:not-allowed!important}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 30px;border-radius:999px;
+       font-weight:600;font-size:15px;cursor:pointer;border:none;font-family:inherit;
+       text-decoration:none;transition:var(--tr)}
+  .btn-main{background:var(--peri-deep);color:#fff;box-shadow:0 10px 26px rgba(108,114,217,.35)}
+  .btn-main:hover{background:var(--peri);transform:translateY(-2px)}
+  .btn-soft{background:var(--pink-pale);color:var(--ink);border:1px solid var(--pink)}
+  .btn-soft:hover{background:var(--pink)}
+  .btn-line{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+  .btn-line:hover{border-color:var(--peri)}
+  button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{
+    outline:2px solid var(--peri);outline-offset:3px}
+  [disabled]{opacity:.4;cursor:not-allowed!important;transform:none!important}
 
-  /* ═══ Зарлалын мөр ═══ */
-  .announce{background:var(--ink);color:var(--gold-pale);text-align:center;
-            font-size:12.5px;padding:8px 16px;letter-spacing:.03em}
-  .announce b{color:var(--gold-2)}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .sparkle,.wing-art{animation:none!important}
+    .ticker-track{animation:none!important}
+    *{transition:none!important}
+  }
 
   /* ═══ Навигаци ═══ */
-  header{position:sticky;top:0;z-index:50;background:rgba(248,244,234,.94);
-         backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 22px;
-       max-width:1080px;margin:0 auto}
-  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-  .brand img{width:46px;height:46px;border-radius:50%;box-shadow:0 0 0 1.5px var(--gold-2)}
-  .brand span{font-family:'Prata',serif;font-size:17px;letter-spacing:.06em}
-  .brand span b{color:var(--gold);font-weight:400}
-  .links{display:flex;gap:24px;align-items:center}
-  .links a{text-decoration:none;font-weight:500;font-size:14px;color:var(--ink-soft)}
-  .links a:hover{color:var(--gold)}
-  .links .btn{padding:10px 22px;font-size:13.5px;color:var(--ivory)}
+  header{position:sticky;top:0;z-index:60;background:rgba(254,254,253,.9);
+         backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;
+       padding:12px 24px;max-width:1100px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+  .brand img{width:42px;height:42px;border-radius:50%}
+  .brand span{font-family:'Prata',serif;font-size:17px}
+  .brand span b{color:var(--peri-deep);font-weight:400}
+  .links{display:flex;gap:26px;align-items:center}
+  .links a{text-decoration:none;font-weight:500;font-size:14px;color:var(--ink-soft);transition:var(--tr)}
+  .links a:hover{color:var(--peri-deep)}
+  .links .btn{padding:10px 22px;font-size:13.5px}
   .burger{display:none;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink)}
-  @media(max-width:880px){
-    .links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ivory);
-           flex-direction:column;padding:20px 22px;border-bottom:1px solid var(--line);
-           gap:16px;align-items:flex-start}
+  @media(max-width:900px){
+    .links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;
+           flex-direction:column;padding:22px 24px;border-bottom:1px solid var(--line);
+           gap:18px;align-items:flex-start}
     .links.open{display:flex}
     .burger{display:block}
   }
 
-  /* ═══ HERO ═══ */
-  .hero{background:var(--ivory);position:relative;overflow:hidden;
-        padding:72px 0 64px;border-bottom:1px solid var(--line)}
-  .hero-grid{display:flex;flex-wrap:wrap;gap:44px;align-items:center;position:relative}
-  .hero-txt{flex:1 1 400px;min-width:290px}
-  .hero-txt .eyebrow{margin-bottom:18px}
-  h1{font-family:'Prata',serif;font-weight:400;font-size:clamp(31px,5vw,52px);
-     line-height:1.22;margin:0;letter-spacing:.01em}
-  h1 em{font-style:normal;color:var(--gold);position:relative;white-space:nowrap}
-  h1 em::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;
-               background:linear-gradient(90deg,var(--gold),transparent)}
-  .hero p{color:var(--ink-soft);font-size:16px;margin:22px 0 30px;max-width:480px}
-  .hero-cta{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-  .hero-phone{font-size:13px;color:var(--ink-soft)}
-  .hero-phone b{font-family:'Prata',serif;font-size:17px;color:var(--ink);display:block}
-  .hero-badge{flex:0 1 340px;min-width:260px;display:flex;flex-direction:column;
-              align-items:center;gap:18px}
-  .hero-badge img{width:min(270px,62vw);height:auto;border-radius:50%;
-                  box-shadow:var(--shadow),0 0 0 1px var(--gold-pale),0 0 0 10px rgba(184,145,47,.06)}
-  .hero-hours{background:#fff;border:1px solid var(--line);border-radius:14px;
-              padding:13px 22px;font-size:13px;color:var(--ink-soft);text-align:center;
-              box-shadow:0 6px 20px rgba(28,43,57,.06)}
-  .hero-hours b{color:var(--ink)}
-  .tooth-line{position:absolute;right:-70px;top:-40px;width:420px;opacity:.5;pointer-events:none}
-  @media(max-width:840px){.tooth-line{display:none}}
+  /* ═══ HERO — цайвар, ид шидийн туяатай ═══ */
+  .hero{position:relative;overflow:hidden;padding:84px 0 76px;
+        background:
+          radial-gradient(640px 380px at 85% 8%, rgba(217,171,158,.30), transparent 65%),
+          radial-gradient(700px 420px at 8% 90%, rgba(137,167,206,.20), transparent 65%),
+          var(--bg)}
+  .hero-grid{display:flex;flex-wrap:wrap;gap:48px;align-items:center;position:relative}
+  .hero-txt{flex:1 1 430px;min-width:300px}
+  h1{font-family:'Prata',serif;font-weight:400;font-size:clamp(33px,5.4vw,56px);
+     line-height:1.18;margin:0}
+  h1 em{font-style:normal;background:linear-gradient(100deg,var(--peri-deep),var(--pink) 55%,var(--spark));
+        -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--ink-soft);font-size:16.5px;margin:20px 0 30px;max-width:420px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero-mini{display:flex;gap:26px;flex-wrap:wrap;margin-top:38px}
+  .hero-mini div{font-size:12.5px;color:var(--ink-soft)}
+  .hero-mini b{display:block;font-family:'Prata',serif;font-size:18px;color:var(--ink);margin-bottom:1px}
 
-  /* ═══ Итгэлийн мөр ═══ */
-  .trust{background:var(--ink);color:var(--gold-pale);padding:15px 0}
-  .trust .wrap{display:flex;gap:8px 36px;flex-wrap:wrap;justify-content:center;
-               font-size:13px;font-weight:500;letter-spacing:.04em}
-  .trust span::before{content:"✦ ";color:var(--gold-2)}
+  /* Дагины уран зураг — зотон жаазтай */
+  .hero-art{flex:0 1 380px;min-width:270px;display:flex;justify-content:center;position:relative}
+  .fairy-frame{position:relative;animation:hover-float 6s ease-in-out infinite}
+  .fairy-frame img{width:min(330px,72vw);border-radius:18px;
+                   box-shadow:0 24px 60px rgba(58,58,66,.18),0 0 0 1px var(--line);
+                   transform:rotate(1.5deg)}
+  @keyframes hover-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .sparkle{position:absolute;color:var(--spark);pointer-events:none;
+           animation:twinkle 2.6s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
 
-  section{padding:70px 0}
+  /* ═══ Тикер — зөөлөн ═══ */
+  .ticker{background:var(--peri-pale);color:var(--peri-deep);overflow:hidden;padding:12px 0;
+          font-weight:600;font-size:13px;letter-spacing:.03em;border-block:1px solid var(--line)}
+  .ticker-track{display:flex;gap:52px;white-space:nowrap;width:max-content;
+                animation:tick 26s linear infinite}
+  .ticker span::before{content:"✦";margin-right:12px;color:var(--spark)}
+  @keyframes tick{to{transform:translateX(-50%)}}
 
-  /* ═══ Үйлчилгээ ═══ */
-  .svc-section{background:var(--ivory);border-bottom:1px solid var(--line)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;
-        display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s,transform .2s}
-  .card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
-  .card-top{display:flex;align-items:center;gap:12px}
-  .card-ico{width:46px;height:46px;border-radius:50%;background:var(--ivory);
-            border:1px solid var(--gold-pale);display:flex;align-items:center;
-            justify-content:center;font-size:21px;flex-shrink:0}
-  .card b{font-size:16px;line-height:1.35}
+  /* ═══ Үйлчилгээ — минимал картууд ═══ */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;
+        display:flex;flex-direction:column;gap:8px;transition:var(--tr)}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--peri)}
+  .card-ico{width:50px;height:50px;border-radius:16px;display:flex;align-items:center;
+            justify-content:center;font-size:23px;margin-bottom:6px}
+  .card:nth-child(3n+1) .card-ico{background:var(--peri-pale)}
+  .card:nth-child(3n+2) .card-ico{background:var(--pink-pale)}
+  .card:nth-child(3n+3) .card-ico{background:#FBF4E4}
+  .card b{font-size:16.5px}
   .card p{font-size:13.5px;color:var(--ink-soft);margin:0;flex:1}
   .card-row{display:flex;justify-content:space-between;align-items:center;gap:10px;
-            margin-top:8px;padding-top:14px;border-top:1px dashed var(--line)}
-  .price{font-family:'Prata',serif;font-size:16px;color:var(--gold)}
-  .mini{background:var(--ink);color:var(--ivory);border:none;border-radius:999px;
-        padding:9px 18px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit}
-  .mini:hover{background:var(--gold)}
+            margin-top:10px;padding-top:14px;border-top:1px solid var(--line)}
+  .price{font-family:'Prata',serif;font-size:16px;color:var(--peri-deep)}
+  .go{background:none;border:none;cursor:pointer;font-family:inherit;font-weight:600;
+      font-size:13.5px;color:var(--ink);display:inline-flex;gap:6px;align-items:center;
+      padding:0;transition:var(--tr)}
+  .go::after{content:"→";transition:var(--tr)}
+  .go:hover{color:var(--peri-deep)}
+  .go:hover::after{transform:translateX(4px)}
 
-  /* ═══ Тухай ═══ */
-  .about-grid{display:flex;flex-wrap:wrap;gap:48px;align-items:center}
-  .about-photo{flex:0 1 340px;min-width:260px;margin:0 auto}
-  .about-photo img{width:100%;aspect-ratio:3/4;object-fit:cover;
-                   border-radius:170px 170px 22px 22px;box-shadow:var(--shadow)}
-  .about-photo figcaption{text-align:center;font-size:12.5px;color:var(--ink-soft);margin-top:12px}
-  .about-txt{flex:1 1 400px}
-  .about-txt>p{color:var(--ink-soft);margin:0 0 16px}
-  .feat{display:flex;gap:14px;margin-top:20px;align-items:flex-start}
-  .feat-ico{width:44px;height:44px;border-radius:50%;background:var(--gold-pale);color:var(--gold);
-            display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-  .feat b{font-size:15px;display:block;margin-bottom:2px}
-  .feat p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+  /* ═══ Тухай — зураг голлосон ═══ */
+  .about-sec{background:var(--bg-2)}
+  .about-grid{display:flex;flex-wrap:wrap;gap:46px;align-items:center}
+  .about-photo{flex:1 1 380px;min-width:280px;position:relative;margin:0}
+  .about-photo img{width:100%;max-width:440px;aspect-ratio:4/5;object-fit:cover;
+                   border-radius:200px 200px 26px 26px;box-shadow:var(--shadow);margin:0 auto}
+  .about-photo .p-spark{position:absolute;font-size:22px}
+  .about-txt{flex:1 1 380px}
+  .feats{display:grid;gap:14px;margin-top:26px}
+  .feat{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);
+        border-radius:18px;padding:16px 20px;transition:var(--tr)}
+  .feat:hover{border-color:var(--peri);transform:translateX(4px)}
+  .feat-ico{width:44px;height:44px;border-radius:14px;background:var(--peri-pale);
+            display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .feat b{font-size:15px;display:block}
+  .feat small{font-size:13px;color:var(--ink-soft)}
 
-  /* ═══ Эмч нар ═══ */
-  .team-section{background:var(--ivory);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
-  .doc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;text-align:center}
-  .avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 14px;
-          background:var(--ink);color:var(--gold-2);display:flex;align-items:center;
-          justify-content:center;font-family:'Prata',serif;font-size:29px;
-          box-shadow:0 0 0 3px var(--ivory),0 0 0 4.5px var(--gold-pale)}
-  .doc>b{font-size:16.5px;display:block}
-  .doc .role{color:var(--gold);font-size:13px;font-weight:600;margin:3px 0 10px;
-             letter-spacing:.06em;text-transform:uppercase}
-  .doc details{text-align:left;margin-top:10px;border-top:1px dashed var(--line);padding-top:12px}
-  .doc summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);list-style:none;
-               display:flex;justify-content:center;gap:6px}
-  .doc summary::after{content:"↓";color:var(--gold)}
-  .doc details[open] summary::after{content:"↑"}
-  .doc details p{font-size:12.5px;color:var(--ink-soft);line-height:1.8;margin:10px 0 0}
-  .doc details p b{color:var(--ink)}
+  /* ═══ Эмч нар — зурагтай картууд ═══ */
+  .docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .doc{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+       transition:var(--tr)}
+  .doc:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .doc-photo{position:relative;aspect-ratio:1/1;overflow:hidden}
+  .doc-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .doc:hover .doc-photo img{transform:scale(1.04)}
+  .doc-photo::after{content:"✦";position:absolute;top:14px;right:16px;color:#fff;
+                    font-size:15px;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+  .doc-body{padding:20px 22px 22px;text-align:center}
+  .doc-body b{font-size:16px;display:block}
+  .doc-body .role{color:var(--peri-deep);font-size:12px;font-weight:700;margin:4px 0 0;
+                  letter-spacing:.1em;text-transform:uppercase}
+  .doc-body small{display:block;color:var(--ink-soft);font-size:12.5px;margin-top:8px}
 
-  /* ═══ Зөвлөгөө ═══ */
-  .advice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
-  .advice{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
-  .advice-head{background:var(--ink);color:var(--gold-pale);padding:18px 22px;
-               font-family:'Prata',serif;font-size:16.5px;line-height:1.45}
-  .advice-head::before{content:"✦ ";color:var(--gold-2);font-size:13px}
-  .advice-body{padding:18px 22px;font-size:13.5px;color:var(--ink-soft);line-height:1.75}
-  .advice-body b{color:var(--ink)}
-
-  /* ═══ FAQ ═══ */
-  .faq-section{background:var(--ivory);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .faq{max-width:760px}
-  .faq details{background:#fff;border:1px solid var(--line);border-radius:14px;
-               margin-bottom:10px;padding:0 20px}
+  /* ═══ FAQ — товч ═══ */
+  .faq{max-width:720px}
+  .faq details{background:#fff;border:1px solid var(--line);border-radius:16px;
+               margin-bottom:10px;padding:0 22px;transition:var(--tr)}
+  .faq details[open]{border-color:var(--peri);box-shadow:var(--shadow)}
   .faq summary{cursor:pointer;font-weight:600;font-size:15px;padding:17px 0;list-style:none;
                display:flex;justify-content:space-between;gap:14px;align-items:center}
-  .faq summary::after{content:"+";font-family:'Prata',serif;font-size:20px;color:var(--gold);flex-shrink:0}
-  .faq details[open] summary::after{content:"–"}
+  .faq summary::after{content:"✦";font-size:13px;color:var(--pink);flex-shrink:0;transition:var(--tr)}
+  .faq details[open] summary::after{color:var(--spark);transform:rotate(180deg)}
   .faq details p{margin:0;padding:0 0 18px;font-size:14px;color:var(--ink-soft);line-height:1.75}
 
   /* ═══ Захиалга ═══ */
-  .book-card{border:1px solid var(--line);border-radius:20px;background:#fff;
-             overflow:hidden;max-width:730px;box-shadow:var(--shadow)}
+  .book-sec{background:
+      radial-gradient(600px 340px at 90% 0%, rgba(217,171,158,.28), transparent 60%),
+      var(--bg-2)}
+  .book-card{border:1px solid var(--line);border-radius:26px;background:#fff;
+             overflow:hidden;max-width:740px;box-shadow:var(--shadow)}
   .steps{display:flex;border-bottom:1px solid var(--line)}
-  .steps div{flex:1;text-align:center;padding:13px 4px;font-size:12px;font-weight:700;
-             letter-spacing:.05em;color:#A9A08B;text-transform:uppercase}
-  .steps div.now{background:var(--ink);color:var(--gold-2)}
-  .steps div.done{color:var(--gold)}
+  .steps div{flex:1;text-align:center;padding:13px 4px;font-size:11.5px;font-weight:700;
+             letter-spacing:.06em;color:#B9BDCF;text-transform:uppercase}
+  .steps div.now{background:var(--peri-deep);color:#fff}
+  .steps div.done{color:var(--peri-deep)}
   .book-body{padding:26px}
-  .lbl{font-size:13px;font-weight:700;margin:0 0 10px;letter-spacing:.02em}
+  .lbl{font-size:13px;font-weight:700;margin:0 0 10px}
   .pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:9px;margin-bottom:18px}
-  .pick{text-align:left;padding:11px 13px;border-radius:12px;cursor:pointer;font-family:inherit;
-        border:1px solid var(--line);background:#fff}
-  .pick.sel{border:1.5px solid var(--gold);background:var(--ivory)}
+  .pick{text-align:left;padding:12px 14px;border-radius:14px;cursor:pointer;font-family:inherit;
+        border:1px solid var(--line);background:#fff;transition:var(--tr)}
+  .pick:hover{border-color:var(--peri)}
+  .pick.sel{border:1.5px solid var(--peri-deep);background:var(--peri-pale)}
   .pick b{font-size:13.5px;display:block}
-  .pick span{font-size:12.5px;color:var(--gold);font-family:'Prata',serif}
+  .pick span{font-size:12.5px;color:var(--peri-deep);font-family:'Prata',serif}
   .days{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}
-  .day{width:62px;padding:9px 0;border-radius:12px;cursor:pointer;border:1px solid var(--line);
-       background:#fff;font-family:inherit;text-align:center}
-  .day.sel{border:1.5px solid var(--gold);background:var(--ivory)}
+  .day{width:62px;padding:9px 0;border-radius:14px;cursor:pointer;border:1px solid var(--line);
+       background:#fff;font-family:inherit;text-align:center;transition:var(--tr)}
+  .day:hover{border-color:var(--peri)}
+  .day.sel{border:1.5px solid var(--peri-deep);background:var(--peri-pale)}
   .day small{display:block;font-size:11px;font-weight:600;color:var(--ink-soft)}
   .day b{font-size:14px}
   .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin-bottom:18px}
-  .slot{padding:10px 0;border-radius:10px;font-weight:600;font-size:13px;font-family:inherit;
-        cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink)}
-  .slot.busy{background:var(--ivory);color:#C5BBA2;cursor:not-allowed;text-decoration:line-through}
-  .slot.sel{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .slot{padding:10px 0;border-radius:12px;font-weight:600;font-size:13px;font-family:inherit;
+        cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);transition:var(--tr)}
+  .slot:hover:not(.busy){border-color:var(--peri)}
+  .slot.busy{background:var(--bg-2);color:#C9CCDB;cursor:not-allowed;text-decoration:line-through}
+  .slot.sel{background:var(--peri-deep);color:#fff;border-color:var(--peri-deep)}
   .field{margin-bottom:15px}
-  .field input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);
-               font-size:14.5px;font-family:inherit;background:var(--ivory-2)}
-  .summary{background:var(--ivory);border:1px solid var(--gold-pale);border-radius:14px;
-           padding:14px 18px;font-size:13.5px;margin-bottom:16px;line-height:1.7}
+  .field input{width:100%;padding:12px 15px;border-radius:14px;border:1px solid var(--line);
+               font-size:15px;font-family:inherit;background:var(--bg-2);transition:var(--tr)}
+  .field input:focus{border-color:var(--peri);background:#fff}
+  .summary{background:var(--peri-pale);border-radius:16px;padding:14px 18px;
+           font-size:13.5px;margin-bottom:16px;line-height:1.7}
   .btn-row{display:flex;gap:12px;flex-wrap:wrap}
-  .success{border:1px solid var(--gold-2);border-radius:20px;padding:34px 28px;
-           background:#fff;text-align:center;max-width:730px;box-shadow:var(--shadow)}
+  .success{border:1px solid var(--peri);border-radius:26px;padding:36px 28px;
+           background:#fff;text-align:center;max-width:740px;box-shadow:var(--shadow)}
   .success h3{font-family:'Prata',serif;font-weight:400;font-size:22px;margin:12px 0 10px}
-  .muted{font-size:12px;color:#9A9077;margin:12px 0 0}
+  .muted{font-size:12px;color:#A7ABBE;margin:12px 0 0}
 
-  /* ═══ Холбоо барих ═══ */
-  .contact{background:var(--ink);color:#C8CFD6;padding:64px 0 0}
-  .contact .serif{color:var(--ivory)}
-  .contact-grid{display:flex;flex-wrap:wrap;gap:36px;padding-bottom:44px}
+  /* ═══ Footer — цайвар ═══ */
+  .contact{background:#fff;border-top:1px solid var(--line);padding:64px 0 0;color:var(--ink-soft)}
+  .contact-grid{display:flex;flex-wrap:wrap;gap:38px;padding-bottom:44px}
   .contact-grid>div{flex:1 1 220px}
-  .contact h4{color:var(--gold-2);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  .contact h4{color:var(--ink);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
               margin:0 0 14px;font-weight:700}
-  .contact p{font-size:14px;margin:0;line-height:1.9}
-  .contact a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(213,180,92,.4)}
-  .contact ul{margin:0;padding:0;list-style:none;font-size:14px;line-height:2.1}
-  .contact ul a{border:none;color:#C8CFD6}
-  .contact ul a:hover{color:var(--gold-2)}
+  .contact h4::before{content:"✦ ";color:var(--spark)}
+  .contact p{font-size:14px;margin:0;line-height:2}
+  .contact a{color:var(--peri-deep);text-decoration:none;font-weight:500}
   .socials{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-  .socials a{background:rgba(213,180,92,.12);border:1px solid rgba(213,180,92,.3);
-             border-radius:999px;padding:9px 18px;font-size:13px;font-weight:600;text-decoration:none}
-  .map{border-radius:16px 16px 0 0;overflow:hidden;border:1px solid rgba(213,180,92,.25);border-bottom:0}
-  .map iframe{display:block;width:100%;height:300px;border:0;filter:grayscale(.2)}
-  footer{border-top:1px solid rgba(255,255,255,.12);padding:18px 0;font-size:12.5px;
-         color:#8B96A2;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .socials a{background:var(--peri-pale);border-radius:999px;padding:9px 18px;
+             font-size:13px;font-weight:600;text-decoration:none;transition:var(--tr)}
+  .socials a:hover{background:var(--peri-deep);color:#fff}
+  .map{border-radius:20px 20px 0 0;overflow:hidden;border:1px solid var(--line);border-bottom:0}
+  .map iframe{display:block;width:100%;height:290px;border:0}
+  footer{border-top:1px solid var(--line);padding:18px 0;font-size:12.5px;color:#A7ABBE;
+         display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+  .fab{display:none;position:fixed;left:16px;right:16px;bottom:16px;z-index:55;justify-content:center}
+  .fab a{width:100%;max-width:420px;justify-content:center}
+  @media(max-width:700px){.fab{display:flex}}
 </style>
 </head>
 <body>
-
-<!-- ══════════ ЗАРЛАЛЫН МӨР ══════════ -->
-<div class="announce">✦ Онлайн цаг захиалга нээгдлээ — <b>дараалал хүлээлгүй</b> үйлчлүүлээрэй</div>
 
 <!-- ══════════ НАВИГАЦИ ══════════ -->
 <header>
   <div class="nav">
     <a class="brand" href="#home">
-      <img src="logo.jpg" alt="UJiN DeNT лого">
-      <span>UJiN <b>DeNT</b></span>
+      <img src="logo.jpg" alt="Үжин Дент лого">
+      <span>Үжин <b>Дент</b></span>
     </a>
     <nav class="links" id="menu">
       <a href="#services">Үйлчилгээ</a>
       <a href="#about">Бидний тухай</a>
       <a href="#doctors">Эмч нар</a>
-      <a href="#advice">Зөвлөгөө</a>
+      <a href="#faq">Асуулт</a>
       <a href="#contact">Холбоо барих</a>
-      <a class="btn btn-gold" href="#booking">Цаг захиалах</a>
+      <a class="btn btn-main" href="#booking">Цаг захиалах</a>
     </nav>
     <button class="burger" aria-label="Цэс" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
   </div>
@@ -263,209 +285,157 @@
 
 <!-- ══════════ HERO ══════════ -->
 <section class="hero" id="home">
-  <svg class="tooth-line" viewBox="0 0 240 220" fill="none" aria-hidden="true">
-    <path d="M50 95 C38 45 72 26 118 32 C148 36 176 26 198 42 C226 62 216 100 204 126
-             C197 142 192 172 181 192 C175 203 163 202 160 188 C156 168 154 148 141 146
-             C128 148 126 168 121 188 C118 202 106 203 100 192 C89 172 84 142 77 126
-             C68 106 58 118 50 95 Z" stroke="#B8912F" stroke-width="2"/>
-    <path d="M88 66 C102 54 138 54 156 68" stroke="#B8912F" stroke-width="1.4" opacity=".55"/>
-    <text x="210" y="30" fill="#B8912F" font-size="15">✦</text>
-    <text x="24" y="150" fill="#D5B45C" font-size="11">✦</text>
-  </svg>
-
   <div class="wrap hero-grid">
     <div class="hero-txt">
-      <div class="eyebrow">Шүд, амны хөндийн эмнэлэг · Хан-Уул, Нисэх</div>
-      <h1>Эрүүл <em>инээмсэглэл</em><br>эндээс эхэлнэ</h1>
-      <p>Оношилгоо, эмчилгээ, урьдчилан сэргийлэлт — бүгд нэг дор, ил тод үнэтэй. Эмчилгээ эхлэхээс өмнө та юу хийлгэх, хэдэн төгрөг төлөхөө яг таг мэднэ.</p>
+      <div class="kicker">Хан-Уул · Нисэх · Хан Плаза 3 давхарт</div>
+      <h1>Инээмсэглэлийн<br>жижигхэн <em>ид шид</em></h1>
+      <p>Оношилгоо, эмчилгээ, сэргийлэлт — нэг дор, ил тод үнэтэй.</p>
       <div class="hero-cta">
-        <a class="btn btn-gold" href="#booking">Цаг захиалах</a>
-        <div class="hero-phone">Утсаар лавлах<b><a href="tel:+97680810058" style="text-decoration:none;border:none">8081-0058</a></b></div>
+        <a class="btn btn-main" href="#booking">Цаг захиалах →</a>
+        <a class="btn btn-line" href="tel:+97680810058">☎ 8081-0058</a>
+      </div>
+      <div class="hero-mini">
+        <div><b>09–18</b>Да–Ба</div>
+        <div><b>10–16</b>Бямба</div>
+        <div><b>1 мин</b>Онлайн захиалга</div>
+        <div><b>VATECH</b>Рентген</div>
       </div>
     </div>
-    <div class="hero-badge">
-      <img src="logo.jpg" alt="UJiN DeNT — Dental Clinic" width="270" height="270">
-      <div class="hero-hours">Да–Ба <b>09:00–18:00</b> · Бямба <b>10:00–16:00</b> · Ням амарна</div>
+
+    <!-- Эмнэлгийн жинхэнэ дагины уран зураг -->
+    <div class="hero-art reveal">
+      <div class="fairy-frame">
+        <img src="fairy.jpg" alt="Үжин Дент — шүдний дагина" width="330" height="426">
+      </div>
+      <span class="sparkle" style="top:4%;left:6%;font-size:17px">✦</span>
+      <span class="sparkle" style="top:30%;right:0;font-size:13px;animation-delay:.9s">✦</span>
+      <span class="sparkle" style="bottom:10%;left:2%;font-size:12px;animation-delay:1.6s">✦</span>
+      <span class="sparkle" style="bottom:2%;right:14%;font-size:15px;animation-delay:.5s">✦</span>
     </div>
   </div>
 </section>
 
-<!-- ══════════ ИТГЭЛИЙН МӨР ══════════ -->
-<div class="trust">
-  <div class="wrap">
+<!-- ══════════ ТИКЕР ══════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="tick">
+    <span>Онлайн цаг захиалга нээгдлээ</span>
+    <span>Урьдчилан сэргийлэх үзлэг 15,000₮</span>
     <span>VATECH рентген оношилгоо</span>
     <span>Хүүхдэд ээлтэй орчин</span>
-    <span>Халдвар хамгааллын дэглэм</span>
-    <span>Ил тод үнэ, И-Баримт</span>
+    <span>Ил тод үнэ · И-Баримт</span>
   </div>
 </div>
 
 <!-- ══════════ ҮЙЛЧИЛГЭЭ ══════════ -->
-<section class="svc-section" id="services">
+<section id="services">
   <div class="wrap">
-    <div class="eyebrow">Үйлчилгээ ба үнэ</div>
-    <h2>Юуг, ямар үнээр хийдэг вэ</h2>
-    <p class="lead">Бид үнээ нуудаггүй. Үзлэгийн дараа эмчилгээний төлөвлөгөө, нийт дүнг танд танилцуулж, та зөвшөөрсний дараа л эмчилгээ эхэлнэ.</p>
+    <div class="kicker reveal">Үйлчилгээ ба үнэ</div>
+    <h2 class="reveal">Юуг, ямар үнээр хийдэг вэ</h2>
+    <p class="lead reveal">Үнийг эмчилгээний өмнө хэлнэ — гэнэтийн нэмэлт төлбөр гарахгүй.</p>
     <div class="cards" id="serviceCards"></div>
   </div>
 </section>
 
 <!-- ══════════ БИДНИЙ ТУХАЙ ══════════ -->
-<section id="about">
+<section class="about-sec" id="about">
   <div class="wrap about-grid">
-    <figure class="about-photo" style="margin:0">
-      <img src="team.jpg" alt="UJiN DeNT хамт олон" loading="lazy" width="340" height="453">
-      <figcaption>UJiN DeNT хамт олон</figcaption>
+    <figure class="about-photo reveal">
+      <img src="team.jpg" alt="Үжин Дент хамт олон" loading="lazy" width="440" height="550">
+      <span class="p-spark" style="top:-8px;right:14%;color:var(--spark)">✦</span>
+      <span class="p-spark" style="bottom:8%;left:2%;color:var(--pink);font-size:15px">✦</span>
     </figure>
     <div class="about-txt">
-      <div class="eyebrow">Бидний тухай</div>
-      <h2>Нэг өвчтөн — нэг төлөвлөгөө</h2>
-      <p>Шүдний өвчин хүн бүрт өөр өөрөөр илэрдэг. Тиймээс бид бэлэн жороор биш, таны амны хөндийн бодит байдалд тулгуурлан ажилладаг: эхлээд бүрэн оношилгоо, дараа нь танд ойлгомжтой тайлбар бүхий төлөвлөгөө, эцэст нь эмчилгээ.</p>
-      <p>Бидний зарчим энгийн: <b style="color:var(--ink)">шаардлагатай эмчилгээг л зөвлөнө.</b> Илүү эмчилгээ санал болгож зардал нэмэхгүй, харин цаг тухайд нь сэргийлж таны цаг, мөнгийг хэмнэнэ.</p>
-      <div class="feat">
-        <div class="feat-ico">🩺</div>
-        <div><b>Нүдэнд харагдахгүйг харна</b><p>Солонгосын VATECH рентгенээр шүдний үндэс, ясны бүтцийг нарийвчлан оношилно — таамгаар эмчлэхгүй.</p></div>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">🧸</div>
-        <div><b>Хүүхэд айхгүй ирдэг газар</b><p>Анхны үзлэгийг тоглоом шиг, дарамтгүй өнгөрүүлж, хүүхдэд шүдний эмчийн сайхан дурсамж үлдээнэ.</p></div>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">🛡</div>
-        <div><b>Ариутгал — үзэгдэхгүй ч хамгийн чухал</b><p>Багаж бүр өвчтөн бүрийн дараа стандартын дагуу ариутгагдана. Энэ бол бидний хэлэлцдэггүй, зүгээр л мөрддөг дүрэм.</p></div>
+      <div class="kicker reveal">Бидний тухай</div>
+      <h2 class="reveal">Шаардлагатай эмчилгээг л зөвлөнө</h2>
+      <p class="lead reveal" style="margin-bottom:0">Эхлээд бүрэн оношилгоо, дараа нь ойлгомжтой төлөвлөгөө — та зөвшөөрсний дараа л эмчилгээ эхэлнэ.</p>
+      <div class="feats">
+        <div class="feat reveal">
+          <div class="feat-ico">🩺</div>
+          <div><b>Нүдэнд харагдахгүйг харна</b><small>Солонгосын VATECH рентген оношилгоо</small></div>
+        </div>
+        <div class="feat reveal">
+          <div class="feat-ico" style="background:var(--pink-pale)">🧚</div>
+          <div><b>Хүүхэд айхгүй ирдэг газар</b><small>Тоглоом шиг, дарамтгүй анхны үзлэг</small></div>
+        </div>
+        <div class="feat reveal">
+          <div class="feat-ico" style="background:#FBF4E4">🛡</div>
+          <div><b>Ариутгал — хэлэлцдэггүй дүрэм</b><small>Багаж бүр өвчтөн бүрийн дараа ариутгагдана</small></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══════════ ЭМЧ НАР ══════════ -->
-<section class="team-section" id="doctors">
+<section id="doctors">
   <div class="wrap">
-    <div class="eyebrow">Манай баг</div>
-    <h2>Таныг эмчлэх хүмүүс</h2>
-    <p class="lead">Эмч бүр мэргэжлийн сургалтад тогтмол хамрагдаж, орчин үеийн аргачлалаар ажилладаг. Нэрэн дээр дарж дэлгэрэнгүй танилцана уу.</p>
+    <div class="kicker reveal">Манай баг</div>
+    <h2 class="reveal">Таныг эмчлэх хүмүүс</h2>
+    <p class="lead reveal">Тогтмол суралцдаг, туршлагатай эмч нар.</p>
     <div class="docs-grid">
-      <div class="doc">
-        <div class="avatar">А</div>
-        <b>Эмчийн овог нэр</b>
-        <div class="role">Ерөнхий шүдний эмч</div>
-        <details>
-          <summary>Дэлгэрэнгүй</summary>
-          <p><b>Төгссөн:</b> [Сургууль, он]<br>
-             <b>Мэргэшил:</b> Эмчилгээ, цэвэрлэгээ<br>
-             <b>Туршлага:</b> [N] жил<br>
-             <b>Мэргэжлээ сонгосон шалтгаан:</b> [Богино, хүнлэг өгүүлбэр]</p>
-        </details>
+      <div class="doc reveal">
+        <div class="doc-photo"><img src="doc1.jpg" alt="Эмч" loading="lazy"></div>
+        <div class="doc-body">
+          <b>Эмчийн овог нэр</b>
+          <div class="role">Ерөнхий шүдний эмч</div>
+          <small>Туршлага: [N] жил · [Сургууль]</small>
+        </div>
       </div>
-      <div class="doc">
-        <div class="avatar">Б</div>
-        <b>Эмчийн овог нэр</b>
-        <div class="role">Хүүхдийн шүдний эмч</div>
-        <details>
-          <summary>Дэлгэрэнгүй</summary>
-          <p><b>Төгссөн:</b> [Сургууль, он]<br>
-             <b>Мэргэшил:</b> Хүүхдийн нүүр амны судлал<br>
-             <b>Туршлага:</b> [N] жил<br>
-             <b>Мэргэжлээ сонгосон шалтгаан:</b> [Богино, хүнлэг өгүүлбэр]</p>
-        </details>
+      <div class="doc reveal">
+        <div class="doc-photo"><img src="doc2.jpg" alt="Эмч" loading="lazy"></div>
+        <div class="doc-body">
+          <b>Эмчийн овог нэр</b>
+          <div class="role">Хүүхдийн шүдний эмч</div>
+          <small>Туршлага: [N] жил · [Сургууль]</small>
+        </div>
       </div>
-      <div class="doc">
-        <div class="avatar">В</div>
-        <b>Эмчийн овог нэр</b>
-        <div class="role">Эмчилгээ, сувгийн эмч</div>
-        <details>
-          <summary>Дэлгэрэнгүй</summary>
-          <p><b>Төгссөн:</b> [Сургууль, он]<br>
-             <b>Мэргэшил:</b> Сувгийн болон мэдрэлийн эмчилгээ<br>
-             <b>Туршлага:</b> [N] жил<br>
-             <b>Мэргэжлээ сонгосон шалтгаан:</b> [Богино, хүнлэг өгүүлбэр]</p>
-        </details>
+      <div class="doc reveal">
+        <div class="doc-photo"><img src="doc3.jpg" alt="Эмч" loading="lazy"></div>
+        <div class="doc-body">
+          <b>Эмчийн овог нэр</b>
+          <div class="role">Эмчилгээ, сувгийн эмч</div>
+          <small>Туршлага: [N] жил · [Сургууль]</small>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ ЗӨВЛӨГӨӨ ══════════ -->
-<section id="advice">
+<!-- ══════════ FAQ ══════════ -->
+<section class="about-sec" id="faq">
   <div class="wrap">
-    <div class="eyebrow">Зөвлөгөө, мэдээлэл</div>
-    <h2>Шүдээ хайрлах хүнд хэрэгтэй мэдлэг</h2>
-    <p class="lead">Хамгийн сайн эмчилгээ бол огт эмчлүүлэх шаардлагагүй байх явдал. Доорх зөвлөгөөнүүд таныг манайд ирэх шалтгааныг цөөрүүлэг гэж бид чин сэтгэлээсээ хүсэж байна.</p>
-    <div class="advice-grid">
-      <article class="advice">
-        <div class="advice-head">Хүүхдээ анх хэзээ үзүүлэх вэ?</div>
-        <div class="advice-body">
-          Анхны сүүн шүд цоормогц буюу <b>1 нас хүрэхээс өмнө</b> эхний үзлэгийг хийлгэхийг зөвлөдөг.
-          Эрт үзлэг нь цоорлыг урьдчилан илрүүлэхээс гадна хүүхдэд "шүдний эмч айдастай газар биш"
-          гэсэн ойлголтыг суулгадаг. Дараа нь хагас жил тутам хяналтад ороход хангалттай.
-        </div>
-      </article>
-      <article class="advice">
-        <div class="advice-head">Шүдний чулуу яагаад үүсдэг вэ?</div>
-        <div class="advice-body">
-          Өдөр бүр угаасан ч сойз хүрдэггүй булан завсарт өнгөр хуримтлагдаж, шүлсний эрдсээр
-          хатуурч чулуу болдог. Чулуу нь <b>буйлны үрэвсэл, амны үнэр, шүд суларах</b>-ын гол
-          шалтгаан. Гэртээ авах боломжгүй тул жилд 1–2 удаа мэргэжлийн цэвэрлэгээ хийлгээрэй.
-        </div>
-      </article>
-      <article class="advice">
-        <div class="advice-head">Өвдөхийг хүлээх үү, эрт ирэх үү?</div>
-        <div class="advice-body">
-          Шүд өвдөж эхлэхэд цооролт ихэвчлэн мэдрэлд ойртсон байдаг — энэ үед эмчилгээ илүү урт,
-          өртөг өндөр болно. Харин <b>өвдөөгүй байхад илрүүлсэн жижиг цоорол</b>-ыг нэг ирэлтээр,
-          хямд зардлаар эмчилдэг. Хагас жил тутмын 15,000₮-ийн үзлэг таны хамгийн ашигтай хөрөнгө оруулалт.
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ ТҮГЭЭМЭЛ АСУУЛТ ══════════ -->
-<section class="faq-section" id="faq">
-  <div class="wrap">
-    <div class="eyebrow">Түгээмэл асуулт</div>
-    <h2>Таны асуухыг хүссэн зүйлс</h2>
-    <p class="lead">Хариулт олдоогүй бол <a href="tel:+97680810058" style="color:var(--gold);font-weight:600">8081-0058</a> дугаарт залгаарай — бид дуртайяа тайлбарлана.</p>
+    <div class="kicker reveal">Түгээмэл асуулт</div>
+    <h2 class="reveal">Богино хариултууд</h2>
+    <p class="lead reveal">Өөр асуулт байвал <a href="tel:+97680810058" style="color:var(--peri-deep);font-weight:600;text-decoration:none">8081-0058</a> — дуртайяа тайлбарлана.</p>
     <div class="faq">
-      <details>
+      <details class="reveal">
         <summary>Эмчилгээ өвдөлттэй юу?</summary>
-        <p>Орчин үеийн мэдээ алдуулалтын аргууд эмчилгээний өвдөлтийг бараг бүрэн арилгадаг.
-        Тариулахаас айдаг хүмүүст тарианы өмнө буйлыг мэдээгүйжүүлэх гель хэрэглэдэг тул
-        тариа өөрөө ч мэдрэгдэхгүй шахам байдаг. Айдастайгаа эмчдээ хэлээрэй — бид яаралгүй, тайлбарлаж байж ажилладаг.</p>
+        <p>Орчин үеийн мэдээ алдуулалт өвдөлтийг бараг бүрэн арилгадаг. Тарианы өмнө буйлыг гелээр мэдээгүйжүүлдэг тул тариа ч мэдрэгдэхгүй шахам.</p>
       </details>
-      <details>
-        <summary>Урьдчилан цаг заавал авах ёстой юу?</summary>
-        <p>Онлайнаар эсвэл утсаар цаг авбал хүлээлгэгүй үйлчлүүлнэ. Шүд гэнэт өвдсөн, гэмтсэн
-        яаралтай тохиолдолд цаггүй шууд ирж болно — бид аль болох түрүүлж үзэхээр зохицуулдаг.</p>
+      <details class="reveal">
+        <summary>Цаг заавал авах ёстой юу?</summary>
+        <p>Цаг авбал хүлээлгэгүй. Гэнэт өвдсөн бол цаггүй шууд ирж болно — түрүүлж үзэхээр зохицуулна.</p>
       </details>
-      <details>
+      <details class="reveal">
         <summary>Үзлэгт юу багтдаг вэ?</summary>
-        <p>Амны хөндийн бүрэн үзлэг, цоорол болон буйлны байдлын үнэлгээ, шаардлагатай бол
-        VATECH рентген зураг, эцэст нь эмчилгээний төлөвлөгөө болон үнийн тооцоог танд
-        ойлгомжтойгоор тайлбарлана. Та төлөвлөгөөг сонссоны дараа эмчлүүлэх эсэхээ өөрөө шийднэ.</p>
+        <p>Бүрэн үзлэг, шаардлагатай бол рентген, эцэст нь төлөвлөгөө + үнийн тооцоо. Эмчлүүлэх эсэхээ та шийднэ.</p>
       </details>
-      <details>
-        <summary>Хүүхдийн үзлэг том хүнийхээс юугаараа ялгаатай вэ?</summary>
-        <p>Хүүхдийн үзлэгт бид эхлээд танилцах, багажийг "тоглоом" шиг үзүүлэх зэргээр айдсыг
-        арилгахад цаг гаргадаг. Сүүн шүдийг "яаж байгаад унана" гэж орхилгүй эмчлэх нь байнгын
-        шүдний эрүүл ургалтад шууд нөлөөтэй.</p>
-      </details>
-      <details>
-        <summary>Ямар төлбөрийн хэлбэр хүлээн авдаг вэ?</summary>
-        <p>Бэлэн мөнгө, карт, банкны апп (QR) — аль нь ч тохиромжтой. Төлбөр бүрт И-Баримт олгоно.</p>
+      <details class="reveal">
+        <summary>Ямар төлбөр хүлээн авдаг вэ?</summary>
+        <p>Бэлэн мөнгө, карт, банкны апп (QR). Төлбөр бүрт И-Баримт олгоно.</p>
       </details>
     </div>
   </div>
 </section>
 
 <!-- ══════════ ЦАГ ЗАХИАЛГА ══════════ -->
-<section id="booking">
+<section class="book-sec" id="booking">
   <div class="wrap">
-    <div class="eyebrow">Онлайн захиалга</div>
-    <h2>Цагаа сонгоорой</h2>
-    <p class="lead">Гурван алхам, нэг минут — таны цаг бүртгэгдэнэ. Яаралтай бол <a href="tel:+97680810058" style="color:var(--gold);font-weight:600">8081-0058</a> дугаарт шууд залгаарай.</p>
-    <div id="bookingRoot"></div>
-    <p class="muted">Таны мэдээлэл зөвхөн цаг захиалгын зорилгоор ашиглагдана.</p>
+    <div class="kicker reveal">Онлайн захиалга</div>
+    <h2 class="reveal">Цагаа сонгоорой</h2>
+    <p class="lead reveal">Гурван алхам, нэг минут.</p>
+    <div id="bookingRoot" class="reveal"></div>
+    <p class="muted">Таны мэдээлэл зөвхөн цаг захиалгад ашиглагдана.</p>
   </div>
 </section>
 
@@ -474,30 +444,20 @@
   <div class="wrap">
     <div class="contact-grid">
       <div>
-        <span class="serif" style="font-size:19px">UJiN <span style="color:var(--gold-2)">DeNT</span></span>
-        <p style="margin-top:14px">Улаанбаатар хот, Хан-Уул дүүрэг,<br>16-р хороо, Нисэхийн тойрог,<br>Хан Плаза — 3 давхарт</p>
+        <span style="font-family:'Prata',serif;font-size:19px;color:var(--ink)">Үжин <span style="color:var(--peri-deep)">Дент</span></span>
+        <p style="margin-top:12px">Хан-Уул дүүрэг, 16-р хороо,<br>Нисэхийн тойрог,<br>Хан Плаза — 3 давхарт</p>
         <div class="socials">
           <a href="https://www.facebook.com/share/18Hg6Bt79b/" target="_blank" rel="noopener">Facebook</a>
           <a href="tel:+97680810058">Залгах</a>
         </div>
       </div>
       <div>
-        <h4>Үйлчилгээ</h4>
-        <ul>
-          <li><a href="#services">Шүд цооролын эмчилгээ</a></li>
-          <li><a href="#services">Цэвэрлэгээ, чулуу авах</a></li>
-          <li><a href="#services">Хүүхдийн эмчилгээ</a></li>
-          <li><a href="#services">Рентген оношилгоо</a></li>
-        </ul>
-      </div>
-      <div>
         <h4>Цагийн хуваарь</h4>
         <p>Даваа–Баасан: 09:00–18:00<br>Бямба: 10:00–16:00<br>Ням: Амарна</p>
-        <p style="margin-top:12px"><b style="color:#fff">Яаралтай үзлэг:</b><br>урьдчилан утсаар холбогдоно уу.</p>
       </div>
       <div>
         <h4>Холбоо барих</h4>
-        <p>Утас: <a href="tel:+97680810058">8081-0058</a>,<br><a href="tel:+97675075001">7507-5001</a><br>
+        <p>Утас: <a href="tel:+97680810058">8081-0058</a>, <a href="tel:+97675075001">7507-5001</a><br>
         Имэйл: <a href="mailto:info@ujindent.mn">info@ujindent.mn</a></p>
       </div>
     </div>
@@ -506,21 +466,23 @@
         src="https://www.google.com/maps?q=Khan+Plaza+Niseh+Ulaanbaatar&output=embed"></iframe>
     </div>
     <footer>
-      <span>© 2026 UJiN DeNT — Шүд, амны хөндийн эмнэлэг</span>
-      <span>Бүх эрх хуулиар хамгаалагдсан</span>
+      <span>© 2026 Үжин Дент — Шүд, амны хөндийн эмнэлэг</span>
+      <span>✦ Инээмсэглэлийн жижигхэн ид шид</span>
     </footer>
   </div>
 </section>
 
+<div class="fab" id="fab"><a class="btn btn-main" href="#booking">Цаг захиалах →</a></div>
+
 <script>
-/* ═══════════ ӨГӨГДӨЛ ═══════════ */
+/* ═══════════ ӨГӨГДӨЛ — товч тайлбартай ═══════════ */
 const SERVICES = [
-  { id:"prevent", ico:"🪥", name:"Урьдчилан сэргийлэх үзлэг", price:"15,000₮", desc:"Хагас жил тутмын хяналт — жижиг асуудлыг том болохоос нь өмнө илрүүлнэ. Хамгийн хямд, хамгийн ухаалаг сонголт." },
-  { id:"cavity",  ico:"🦷", name:"Шүд цооролын эмчилгээ", price:"60,000₮-с",  desc:"Цоорлыг мэдээ алдуулалттайгаар цэвэрлэж, шүдний өнгөнд тохирсон ломбоор сэргээнэ. Ихэнх тохиолдолд нэг ирэлтээр дуусна." },
-  { id:"clean",   ico:"✨", name:"Цэвэрлэгээ, чулуу авах", price:"80,000₮-с",  desc:"Чулуу, өнгөрийг ультразвукаар пааланг гэмтээлгүй авч, өнгөлнө. Буйлны үрэвсэл, амны үнэрийн гол шалтгааныг арилгана." },
-  { id:"kids",    ico:"🧸", name:"Хүүхдийн шүдний эмчилгээ", price:"Үзлэг 20,000₮", desc:"Айдасгүй анхны танилцах үзлэгээс эхлээд сүүн шүдний эмчилгээ хүртэл — хүүхдийн хэмнэлээр, дарамтгүй." },
-  { id:"pain",    ico:"🌿", name:"Мэдрэгшил, өвдөлтийн эмчилгээ", price:"Оношоос хамаарна", desc:"Хүйтэн, халуунд хорсох, зүүн шөнийн өвдөлт — шалтгааныг нь оношилж, шат дараатай эмчилнэ. Үнийг үзлэгийн дараа тодорхой хэлнэ." },
-  { id:"xray",    ico:"📸", name:"Рентген оношилгоо (VATECH)", price:"15,000–25,000₮", desc:"Солонгосын VATECH төхөөрөмжөөр нүдэнд үл харагдах цоорол, үндэсний үрэвслийг илрүүлнэ. Зургийг танд тайлбарлаж өгнө." },
+  { id:"prevent", ico:"🪥", name:"Урьдчилан сэргийлэх үзлэг", price:"15,000₮", desc:"Хагас жил тутмын хяналт — хамгийн ухаалаг сонголт." },
+  { id:"cavity",  ico:"🦷", name:"Шүд цооролын эмчилгээ", price:"60,000₮-с",  desc:"Өнгөнд тохирсон ломбо, ихэвчлэн нэг ирэлтээр." },
+  { id:"clean",   ico:"✨", name:"Цэвэрлэгээ, чулуу авах", price:"80,000₮-с",  desc:"Чулуу, өнгөрийг пааланг гэмтээлгүй арилгана." },
+  { id:"kids",    ico:"🧸", name:"Хүүхдийн эмчилгээ", price:"Үзлэг 20,000₮", desc:"Айдасгүй, тоглоом шиг үзлэгээс эхэлнэ." },
+  { id:"pain",    ico:"🌿", name:"Мэдрэгшил, өвдөлт", price:"Оношоос хамаарна", desc:"Шалтгааныг олж, шат дараатай эмчилнэ." },
+  { id:"xray",    ico:"📸", name:"Рентген (VATECH)", price:"15,000–25,000₮", desc:"Нүдэнд үл харагдах цоорлыг илрүүлнэ." },
 ];
 
 const SLOT_HOURS = { weekday:[9,18], saturday:[10,16] };
@@ -543,23 +505,30 @@ function slotsFor(dateObj){
   const s=[]; for(let h=a;h<b;h++){s.push(String(h).padStart(2,"0")+":00",String(h).padStart(2,"0")+":30");}
   return s;
 }
-/* Захиалгатай цагийн загварчлал — backend холбогдоход энэ функцийг
-   Supabase-аас сул цаг татдаг fetch-ээр СОЛИНО */
+/* Backend холбогдоход энэ функцийг Supabase fetch-ээр солино */
 function busyFor(dateIso){
   const seed=[...dateIso].reduce((s,c)=>s+c.charCodeAt(0),0);
   return new Set(slotsFor(DATES.find(d=>d.iso===dateIso)||DATES[0]).filter((_,i)=>(seed*(i+3))%7<2));
 }
 
-/* ═══════════ ҮЙЛЧИЛГЭЭНИЙ КАРТУУД ═══════════ */
+const tick=document.getElementById("tick");
+tick.innerHTML+=tick.innerHTML;
+
 document.getElementById("serviceCards").innerHTML = SERVICES.map(s=>`
-  <div class="card">
-    <div class="card-top"><div class="card-ico">${s.ico}</div><b>${s.name}</b></div>
+  <div class="card reveal">
+    <div class="card-ico">${s.ico}</div>
+    <b>${s.name}</b>
     <p>${s.desc}</p>
     <div class="card-row">
       <span class="price">${s.price}</span>
-      <button class="mini" onclick="startBooking('${s.id}')">Цаг авах</button>
+      <button class="go" onclick="startBooking('${s.id}')">Цаг авах</button>
     </div>
   </div>`).join("");
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
 /* ═══════════ ЗАХИАЛГЫН ВИДЖЕТ ═══════════ */
 const state={step:1,serviceId:"prevent",date:DATES[0].iso,time:null,name:"",phone:"",done:null};
@@ -569,17 +538,17 @@ function startBooking(id){ state.serviceId=id; state.step=1; state.done=null; re
 
 function render(){
   const root=document.getElementById("bookingRoot");
+  root.classList.add("in");
   const svc=SERVICES.find(s=>s.id===state.serviceId);
   const dObj=DATES.find(d=>d.iso===state.date);
 
   if(state.done){
     root.innerHTML=`<div class="success">
-      <div style="font-size:36px;color:var(--gold)">✦</div>
+      <div style="font-size:34px;color:var(--spark)">✦</div>
       <h3>Захиалга хүлээн авлаа</h3>
-      <p style="font-size:14.5px;color:var(--ink-soft);max-width:480px;margin:0 auto">
+      <p style="font-size:14.5px;color:var(--ink-soft);max-width:460px;margin:0 auto">
         <b>${state.done.name}</b> танд <b>${dObj.label} (${dObj.day})</b> өдрийн <b>${state.done.time}</b> цагт
-        <b>${svc.name}</b> үйлчилгээгээр цаг бүртгэгдлээ.
-        Лавлагааны дугаар: <b>${state.done.ref}</b>.
+        <b>${svc.name}</b> цаг бүртгэгдлээ. Лавлагаа: <b>${state.done.ref}</b>.
         Манай зөвлөх <b>${state.done.phone}</b> дугаарт холбогдож баталгаажуулна.</p>
       <button class="btn btn-line" style="margin-top:20px"
         onclick="state.done=null;state.step=1;state.time=null;render()">Өөр цаг захиалах</button>
@@ -599,7 +568,7 @@ function render(){
         ${SERVICES.map(s=>`<button class="pick ${s.id===state.serviceId?"sel":""}"
           onclick="state.serviceId='${s.id}';render()"><b>${s.name}</b><span>${s.price}</span></button>`).join("")}
       </div>
-      <button class="btn btn-gold" onclick="state.step=2;render()">Үргэлжлүүлэх →</button>`;
+      <button class="btn btn-main" onclick="state.step=2;render()">Үргэлжлүүлэх →</button>`;
   }
   if(state.step===2){
     const busy=busyFor(state.date);
@@ -613,7 +582,7 @@ function render(){
           onclick="state.time='${t}';render()">${t}</button>`;}).join("")}</div>
       <div class="btn-row">
         <button class="btn btn-line" onclick="state.step=1;render()">← Буцах</button>
-        <button class="btn btn-gold" ${state.time?"":"disabled"} onclick="state.step=3;render()">Үргэлжлүүлэх →</button>
+        <button class="btn btn-main" ${state.time?"":"disabled"} onclick="state.step=3;render()">Үргэлжлүүлэх →</button>
       </div>`;
   }
   if(state.step===3){
@@ -625,7 +594,7 @@ function render(){
         <input id="fPhone" value="${state.phone}" inputmode="numeric" placeholder="8 оронтой дугаар"></div>
       <div class="btn-row">
         <button class="btn btn-line" onclick="state.step=2;render()">← Буцах</button>
-        <button class="btn btn-gold" onclick="submitBooking()">Захиалга илгээх</button>
+        <button class="btn btn-main" onclick="submitBooking()">Захиалга илгээх</button>
       </div>`;
   }
   root.innerHTML=`<div class="book-card">${stepHdr}<div class="book-body">${body}</div></div>`;
@@ -638,10 +607,7 @@ function submitBooking(){
   if(!/^\d{8}$/.test(phone)){alert("Утасны дугаар 8 оронтой байх ёстой.");return;}
   state.name=name; state.phone=phone;
 
-  /* ─────────────────────────────────────────────────────────
-     BACKEND ХОЛБОЛТ (дараагийн шат): энд Supabase booking_inbox
-     руу POST илгээнэ. Дотоод сервер минут тутам татаж авна.
-     ───────────────────────────────────────────────────────── */
+  /* BACKEND: энд Supabase booking_inbox руу POST илгээнэ */
 
   state.done={ ...state, ref:"UJ-"+Math.floor(1000+Math.random()*9000) };
   render();
