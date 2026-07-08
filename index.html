@@ -109,12 +109,14 @@
   .hero-mini div{font-size:12.5px;color:var(--ink-soft)}
   .hero-mini b{display:block;font-family:'Prata',serif;font-size:18px;color:var(--ink);margin-bottom:1px}
 
-  /* Дагины уран зураг — зотон жаазтай */
+  /* Дагина — дэвсгэргүй, чөлөөтэй хөвнө */
   .hero-art{flex:0 1 380px;min-width:270px;display:flex;justify-content:center;position:relative}
   .fairy-frame{position:relative;animation:hover-float 6s ease-in-out infinite}
-  .fairy-frame img{width:min(330px,72vw);border-radius:18px;
-                   box-shadow:0 24px 60px rgba(58,58,66,.18),0 0 0 1px var(--line);
-                   transform:rotate(1.5deg)}
+  .fairy-frame::before{content:"";position:absolute;inset:8% -6% 4% -6%;border-radius:50%;
+      background:radial-gradient(closest-side, rgba(217,171,158,.35), rgba(137,167,206,.14) 60%, transparent);
+      filter:blur(14px);z-index:-1}
+  .fairy-frame img{width:min(300px,66vw);
+      filter:drop-shadow(0 20px 34px rgba(58,58,66,.22))}
   @keyframes hover-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   .sparkle{position:absolute;color:var(--spark);pointer-events:none;
            animation:twinkle 2.6s ease-in-out infinite}
@@ -305,7 +307,8 @@
     <!-- Эмнэлгийн жинхэнэ дагины уран зураг -->
     <div class="hero-art reveal">
       <div class="fairy-frame">
-        <img src="fairy.jpg" alt="Үжин Дент — шүдний дагина" width="330" height="426">
+        <img src="fairy.webp" alt="Үжин Дент — шүдний дагина" width="300" height="405"
+             onerror="this.onerror=null;this.src='fairy.png'">
       </div>
       <span class="sparkle" style="top:4%;left:6%;font-size:17px">✦</span>
       <span class="sparkle" style="top:30%;right:0;font-size:13px;animation-delay:.9s">✦</span>
