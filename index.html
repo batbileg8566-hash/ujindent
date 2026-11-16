@@ -274,6 +274,25 @@
   footer{border-top:1px solid var(--line);padding:18px 0;font-size:12.5px;color:#A7ABBE;
          display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
+  /* Цэс: идэвхтэй хэсэг, наалддаг толгойн доор гарчиг далдлагдахгүй */
+  section[id]{scroll-margin-top:76px}
+  .links a:not(.btn){position:relative}
+  .links a.on:not(.btn){color:var(--peri-deep)}
+  .links a.on:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:1px;background:var(--spark)}
+  /* Товчны бичвэр цэс, холбоо барих хэсэгт холбоосын өнгөөр дарагдаж байсныг засав */
+  .links a.btn-main,.links a.btn-main:hover,.contact a.btn-main{color:#fff}
+  /* Маягтын алдааг хуудсан дээр харуулна */
+  .form-err{background:var(--pink-pale);color:#9C4B3A;border-radius:14px;padding:11px 15px;font-size:14px;margin:0 0 15px}
+  /* Байршил: хаягийн карт + газрын зураг */
+  .place{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);border:1px solid var(--line);
+         border-radius:20px;overflow:hidden;background:#fff;margin-bottom:44px}
+  .place-info{padding:26px 26px 24px;display:flex;flex-direction:column;gap:14px}
+  .place-info b.t{font-family:'Prata',serif;font-weight:400;font-size:20px;color:var(--ink)}
+  .place-info .btn{justify-content:center;font-size:14px;padding:11px 18px}
+  .place-map{position:relative;min-height:340px;background:var(--bg-2)}
+  .place-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  @media(max-width:800px){.place{grid-template-columns:1fr}.place-map{min-height:300px}}
+  .contact h2{margin-bottom:26px}
   .fab{display:none;position:fixed;left:16px;right:16px;bottom:16px;z-index:55;justify-content:center}
   .fab a{width:100%;max-width:420px;justify-content:center}
   @media(max-width:700px){.fab{display:flex}}
@@ -291,12 +310,11 @@
     <nav class="links" id="menu">
       <a href="#services">Үйлчилгээ</a>
       <a href="#about">Бидний тухай</a>
-      <a href="#doctors">Эмч нар</a>
-      <a href="#faq">Асуулт</a>
-      <a href="#contact">Холбоо барих</a>
+      <a href="#faq">Асуулт, хариулт</a>
+      <a href="#contact">Хаяг, холбоо барих</a>
       <a class="btn btn-main" href="#booking">Цаг захиалах</a>
     </nav>
-    <button class="burger" aria-label="Цэс" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    <button class="burger" id="burger" aria-label="Цэс" aria-expanded="false" aria-controls="menu">☰</button>
   </div>
 </header>
 
@@ -304,17 +322,17 @@
 <section class="hero" id="home">
   <div class="wrap hero-grid">
     <div class="hero-txt">
-      <div class="kicker">Хан-Уул · Нисэх · Хан Плаза 3 давхарт</div>
+      <div class="kicker">Хан-Уул · Нисэх · Хан Плаза, 3 давхар</div>
       <h1>Инээмсэглэлийн<br>жижигхэн <em>ид шид</em></h1>
-      <p>Оношилгоо, эмчилгээ, сэргийлэлт — нэг дор, ил тод үнэтэй.</p>
+      <p>Шүд, амны хөндийн оношилгоо, эмчилгээ, урьдчилан сэргийлэлт.</p>
       <div class="hero-cta">
-        <a class="btn btn-main" href="#booking">Цаг захиалах →</a>
+        <a class="btn btn-main" href="#booking">Цаг захиалах</a>
         <a class="btn btn-line" href="tel:+97680810058">☎ 8081-0058</a>
       </div>
       <div class="hero-mini">
         <div><b>09–18</b>Да–Ба</div>
         <div><b>10–16</b>Бямба</div>
-        <div><b>1 мин</b>Онлайн захиалга</div>
+        <div><b>10,000₮</b>Үзлэг, зөвлөгөө</div>
         <div><b>VATECH</b>Рентген</div>
       </div>
     </div>
@@ -336,11 +354,11 @@
 <!-- ══════════ ТИКЕР ══════════ -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track" id="tick">
-    <span>Онлайн цаг захиалга нээгдлээ</span>
     <span>Үзлэг, оношилгоо, зөвлөгөө 10,000₮</span>
-    <span>VATECH рентген оношилгоо</span>
-    <span>Хүүхдэд ээлтэй орчин</span>
-    <span>Ил тод үнэ · И-Баримт</span>
+    <span>Даваа–Баасан 09:00–18:00</span>
+    <span>Бямба 10:00–16:00</span>
+    <span>Хан Плаза, 3 давхар</span>
+    <span>Утас 8081-0058</span>
   </div>
 </div>
 
@@ -348,8 +366,8 @@
 <section id="services">
   <div class="wrap">
     <div class="kicker reveal">Үйлчилгээ ба үнэ</div>
-    <h2 class="reveal">Юуг, ямар үнээр хийдэг вэ</h2>
-    <p class="lead reveal">Үнийг эмчилгээний өмнө хэлнэ — гэнэтийн нэмэлт төлбөр гарахгүй.</p>
+    <h2 class="reveal">Үйлчилгээний төрөл, үнэ</h2>
+    <p class="lead reveal">Эмнэлгийн баталсан тариф. Таны эмчилгээний үнийг эмч үзлэгийн дараа хэлнэ.</p>
     <div class="cards" id="serviceCards"></div>
   </div>
 </section>
@@ -364,32 +382,35 @@
     </figure>
     <div class="about-txt">
       <div class="kicker reveal">Бидний тухай</div>
-      <h2 class="reveal">Шаардлагатай эмчилгээг л зөвлөнө</h2>
-      <p class="lead reveal" style="margin-bottom:0">Эхлээд бүрэн оношилгоо, дараа нь ойлгомжтой төлөвлөгөө — та зөвшөөрсний дараа л эмчилгээ эхэлнэ.</p>
+      <h2 class="reveal">Эхлээд оношилгоо, дараа нь эмчилгээ</h2>
+      <p class="lead reveal" style="margin-bottom:0">Эмч үзлэгийн дараа эмчилгээний төлөвлөгөө, үнийг танилцуулна. Таныг зөвшөөрсний дараа эмчилгээ эхэлнэ.</p>
       <div class="feats">
         <div class="feat reveal">
           <div class="feat-ico">🩺</div>
-          <div><b>Нүдэнд харагдахгүйг харна</b><small>Солонгосын VATECH рентген оношилгоо</small></div>
+          <div><b>Рентген оношилгоо</b><small>VATECH аппаратаар шүдний ёзоор, ясыг зургаар шалгана</small></div>
         </div>
         <div class="feat reveal">
           <div class="feat-ico" style="background:var(--pink-pale)">🧚</div>
-          <div><b>Хүүхэд айхгүй ирдэг газар</b><small>Тоглоом шиг, дарамтгүй анхны үзлэг</small></div>
+          <div><b>Хүүхдийн шүдний эмчилгээ</b><small>Сүүн шүдний үзлэг, эмчилгээ, сэргийлэх түрхлэг</small></div>
         </div>
         <div class="feat reveal">
           <div class="feat-ico" style="background:#FBF4E4">🛡</div>
-          <div><b>Ариутгал — хэлэлцдэггүй дүрэм</b><small>Багаж бүр өвчтөн бүрийн дараа ариутгагдана</small></div>
+          <div><b>Ариутгал</b><small>Багажийг үйлчлүүлэгч бүрийн дараа ариутгана</small></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ ЭМЧ НАР ══════════ -->
-<section id="doctors">
+<!-- ══════════ ЭМЧ НАР ══════════
+     НУУСАН: эмч нарын нэр, мэргэжил, туршлага ирээгүй тул "[N] жил · [Сургууль]" гэсэн
+     орлуулагч бичвэр нийтэд харагдаж байсан. Мэдээллийг бөглөөд section-ийн hidden-г авч,
+     цэсэнд <a href="#doctors">Эмч нар</a> мөрийг буцааж нэмнэ. -->
+<section id="doctors" hidden>
   <div class="wrap">
     <div class="kicker reveal">Манай баг</div>
     <h2 class="reveal">Таныг эмчлэх хүмүүс</h2>
-    <p class="lead reveal">Тогтмол суралцдаг, туршлагатай эмч нар.</p>
+    
     <div class="docs-grid">
       <div class="doc reveal">
         <div class="doc-photo"><img src="doc1.jpg" alt="Эмч" loading="lazy"></div>
@@ -420,23 +441,31 @@
 </section>
 
 <!-- ══════════ FAQ ══════════ -->
-<section class="about-sec" id="faq">
+<section id="faq">
   <div class="wrap">
-    <div class="kicker reveal">Түгээмэл асуулт</div>
-    <h2 class="reveal">Богино хариултууд</h2>
-    <p class="lead reveal">Өөр асуулт байвал <a href="tel:+97680810058" style="color:var(--peri-deep);font-weight:600;text-decoration:none">8081-0058</a> — дуртайяа тайлбарлана.</p>
+    <div class="kicker reveal">Асуулт, хариулт</div>
+    <h2 class="reveal">Түгээмэл асуулт</h2>
+    <p class="lead reveal">Өөр асуулт байвал <a href="tel:+97680810058" style="color:var(--peri-deep);font-weight:600;text-decoration:none">8081-0058</a> дугаарт залгаарай.</p>
     <div class="faq">
       <details class="reveal">
-        <summary>Эмчилгээ өвдөлттэй юу?</summary>
-        <p>Орчин үеийн мэдээ алдуулалт өвдөлтийг бараг бүрэн арилгадаг. Тарианы өмнө буйлыг гелээр мэдээгүйжүүлдэг тул тариа ч мэдрэгдэхгүй шахам.</p>
+        <summary>Онлайн хүсэлт илгээсний дараа юу болох вэ?</summary>
+        <p>Ресепшн ажлын цагаар таны дугаарт залгаж цагийг баталгаажуулна. Залгах хүртэл цаг баталгаажаагүй гэж үзнэ.</p>
       </details>
       <details class="reveal">
-        <summary>Цаг заавал авах ёстой юу?</summary>
-        <p>Цаг авбал хүлээлгэгүй. Гэнэт өвдсөн бол цаггүй шууд ирж болно — түрүүлж үзэхээр зохицуулна.</p>
+        <summary>Цаг авалгүй ирж болох уу?</summary>
+        <p>Болно. Цаг авсан үйлчлүүлэгчийг түрүүлж үздэг тул хүлээх магадлалтай. Гэнэт өвдсөн бол 8081-0058 дугаарт залгаад ирээрэй.</p>
       </details>
       <details class="reveal">
         <summary>Үзлэгт юу багтдаг вэ?</summary>
-        <p>Бүрэн үзлэг, шаардлагатай бол рентген, эцэст нь төлөвлөгөө + үнийн тооцоо. Эмчлүүлэх эсэхээ та шийднэ.</p>
+        <p>Үзлэг, оношилгоо, зөвлөгөө 10,000₮. Рентген зураг шаардлагатай бол эмч урьдчилан хэлнэ. Эмчлүүлэх эсэхээ та шийднэ.</p>
+      </details>
+      <details class="reveal">
+        <summary>Эмчилгээг мэдээ алдуулж хийдэг үү?</summary>
+        <p>Шаардлагатай эмчилгээг мэдээ алдуулалттай хийнэ. Мэдээ алдуулалт 10,000₮. Эмийн харшилтай бол эмчид урьдчилан хэлээрэй.</p>
+      </details>
+      <details class="reveal">
+        <summary>Гажиг заслын төлбөрийг хувааж төлж болох уу?</summary>
+        <p>Болно. Аппаратын төлбөрийг 6 сар эсвэл 1 жилээр хувааж төлнө. Нөхцөлийг үзлэгийн үеэр танилцуулна.</p>
       </details>
       <details class="reveal">
         <summary>Ямар төлбөр хүлээн авдаг вэ?</summary>
@@ -449,48 +478,57 @@
 <!-- ══════════ ЦАГ ЗАХИАЛГА ══════════ -->
 <section class="book-sec" id="booking">
   <div class="wrap">
-    <div class="kicker reveal">Онлайн захиалга</div>
-    <h2 class="reveal">Цагаа сонгоорой</h2>
-    <p class="lead reveal">Гурван алхам, нэг минут.</p>
+    <div class="kicker reveal">Цаг захиалах</div>
+    <h2 class="reveal">Хүссэн цагаа илгээнэ үү</h2>
+    <p class="lead reveal">Хүсэлт илгээсний дараа ресепшн утсаар залгаж цагийг баталгаажуулна.</p>
     <div id="bookingRoot" class="reveal"></div>
-    <p class="muted">Таны мэдээлэл зөвхөн цаг захиалгад ашиглагдана.</p>
+    <p class="muted">Таны нэр, утасны дугаарыг зөвхөн цаг баталгаажуулахад ашиглана.</p>
   </div>
 </section>
 
 <!-- ══════════ ХОЛБОО БАРИХ ══════════ -->
 <section class="contact" id="contact" style="padding-bottom:0">
   <div class="wrap">
+    <div class="kicker reveal">Хаяг, холбоо барих</div>
+    <h2 class="reveal" style="color:var(--ink)">Хан Плаза, 3 давхар</h2>
+    <div class="place reveal">
+      <div class="place-info">
+        <b class="t">Үжин Дент шүдний эмнэлэг</b>
+        <p style="line-height:1.7">Хан-Уул дүүрэг, Нисэх<br>Хан Плаза худалдааны төв, 3 давхар</p>
+        <p style="line-height:1.7">Зураг дээрх улаан тэмдэг нь эмнэлгийн байршил. Замаа олохгүй бол <a href="tel:+97680810058">8081-0058</a> дугаарт залгаарай.</p>
+        <a class="btn btn-main" href="https://www.google.com/maps/dir/?api=1&destination=47.858926,106.785442&destination_place_id=ChIJbWQwBwDrll0Rgk3Ou8BAz1M" target="_blank" rel="noopener">Чиглэл авах</a>
+        <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&query=47.858926,106.785442&query_place_id=ChIJbWQwBwDrll0Rgk3Ou8BAz1M" target="_blank" rel="noopener">Google Maps-ээр нээх</a>
+      </div>
+      <div class="place-map">
+        <iframe title="Үжин Дент эмнэлгийн байршил, Хан Плаза" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=47.858926,106.785442&z=17&hl=mn&output=embed"></iframe>
+      </div>
+    </div>
     <div class="contact-grid">
       <div>
-        <span style="font-family:'Prata',serif;font-size:19px;color:var(--ink)">Үжин <span style="color:var(--peri-deep)">Дент</span></span>
-        <p style="margin-top:12px">Хан-Уул дүүрэг, 16-р хороо,<br>Нисэхийн тойрог,<br>Хан Плаза — 3 давхарт</p>
-        <div class="socials">
-          <a href="https://www.facebook.com/share/18Hg6Bt79b/" target="_blank" rel="noopener">Facebook</a>
-          <a href="tel:+97680810058">Залгах</a>
-        </div>
+        <h4>Хаяг</h4>
+        <p>Хан-Уул дүүрэг, Нисэх,<br>Хан Плаза, 3 давхар</p>
       </div>
       <div>
         <h4>Цагийн хуваарь</h4>
-        <p>Даваа–Баасан: 09:00–18:00<br>Бямба: 10:00–16:00<br>Ням: Амарна</p>
+        <p>Даваа–Баасан: 09:00–18:00<br>Бямба: 10:00–16:00<br>Ням: амарна</p>
       </div>
       <div>
-        <h4>Холбоо барих</h4>
-        <p>Утас: <a href="tel:+97680810058">8081-0058</a>, <a href="tel:+97675075001">7507-5001</a><br>
-        Имэйл: <a href="mailto:info@ujindent.mn">info@ujindent.mn</a></p>
+        <h4>Утас</h4>
+        <p><a href="tel:+97680810058">8081-0058</a><br><a href="tel:+97675075001">7507-5001</a></p>
+        <div class="socials">
+          <a href="https://www.facebook.com/share/18Hg6Bt79b/" target="_blank" rel="noopener">Facebook</a>
+        </div>
       </div>
     </div>
-    <div class="map">
-      <iframe title="Байршил" loading="lazy"
-        src="https://www.google.com/maps?q=Khan+Plaza+Niseh+Ulaanbaatar&output=embed"></iframe>
-    </div>
     <footer>
-      <span>© 2026 Үжин Дент — Шүд, амны хөндийн эмнэлэг</span>
+      <span>© 2026 Үжин Дент. Шүд, амны хөндийн эмнэлэг</span>
       <span>✦ Инээмсэглэлийн жижигхэн ид шид</span>
     </footer>
   </div>
 </section>
 
-<div class="fab" id="fab"><a class="btn btn-main" href="#booking">Цаг захиалах →</a></div>
+<div class="fab" id="fab"><a class="btn btn-main" href="#booking">Цаг захиалах</a></div>
 
 <script>
 /* ═══════════ ҮҮЛЭН ХОЛБОЛТ ═══════════
@@ -500,53 +538,53 @@ const BOOKING_URL = "https://weaibivwceugrmlihqua.supabase.co/functions/v1/submi
 
 /* ═══════════ ҮЙЛЧИЛГЭЭ — эмнэлгийн албан ёсны тарифаас (2026) ═══════════ */
 const SERVICES = [
-  { id:"prevent", ico:"🪥", name:"Урьдчилан сэргийлэх", price:"10,000₮-с",
-    desc:"Үзлэг, цэвэрлэгээ, фторт хамгаалалт.",
+  { id:"prevent", ico:"🪥", name:"Урьдчилан сэргийлэх", price:"10,000₮-өөс",
+    desc:"Үзлэг, цэвэрлэгээ, фторт түрхлэг.",
     items:[["Үзлэг, оношилгоо, зөвлөгөө","10,000₮"],
            ["Өнгөр цэвэрлэх (элсээр)","65,000–85,000₮"],
            ["Өнгөр, чулуу цэвэрлэх + фторт түрхлэг","85,000₮"],
            ["Цоорлоос сэргийлэх түрхлэг","45,000₮"],
            ["Хэт мэдрэгшлийн түрхлэг (1 шүд)","10,000₮"]] },
-  { id:"filling", ico:"🦷", name:"Ломбо (цоорол)", price:"50,000₮-с",
-    desc:"Цоорлын гүнээс хамаарсан ил тод үнэ.",
+  { id:"filling", ico:"🦷", name:"Ломбо (цоорол)", price:"50,000₮-өөс",
+    desc:"Үнэ цоорлын гүнээс хамаарна.",
     items:[["Өнгөц цоорол","50,000₮"],
            ["Дунд цоорол","60,000₮"],
            ["Гүн цоорол","70,000₮"],
            ["Гүн цоорол (2–3 тал)","75,000₮"],
            ["Мэдээ алдуулалт","10,000₮"]] },
-  { id:"canal", ico:"🌿", name:"Сувгийн эмчилгээ", price:"220,000₮-с",
-    desc:"Өвдөлт, мэдрэлийн эмчилгээ.",
+  { id:"canal", ico:"🌿", name:"Сувгийн эмчилгээ", price:"220,000₮-өөс",
+    desc:"Шүдний мэдрэл, сувгийн эмчилгээ.",
     items:[["Сувгийн эмчилгээ (1–2 суваг)","220,000₮"],
            ["Сувгийн эмчилгээ (3–4 суваг)","250,000₮"],
            ["Хүндрэлтэй шүдний суваг","300,000₮"],
            ["Голонцор суулгах","80,000–120,000₮"]] },
   { id:"kids", ico:"🧸", name:"Хүүхдийн эмчилгээ", price:"Үзлэг 10,000₮",
-    desc:"Сүүн шүдний бүх эмчилгээ, дарамтгүй.",
+    desc:"Сүүн шүдний үзлэг, эмчилгээ.",
     items:[["Үзлэг, оношилгоо, зөвлөгөө","10,000₮"],
            ["Цоорол (өнгөц / дунд / гүн)","40,000–50,000₮"],
            ["Зөөлцийн үрэвсэл","120,000₮"],
            ["Сүүн шүд авах","25,000–30,000₮"],
            ["Сэргийлэх түрхлэг (бүх шүд)","35,000₮"]] },
-  { id:"extract", ico:"🩺", name:"Шүд авалт", price:"50,000₮-с",
-    desc:"Энгийнээс агт араа хүртэл.",
+  { id:"extract", ico:"🩺", name:"Шүд авалт", price:"50,000₮-өөс",
+    desc:"Энгийн шүднээс агт араа хүртэл.",
     items:[["Шүд авах","50,000₮"],
            ["Хүндрэлтэй шүд авах","80,000–100,000₮"],
            ["Агт араа авах","100,000₮"],
            ["Саатсан агт араа авах","200,000–250,000₮"]] },
-  { id:"ortho", ico:"😁", name:"Гажиг засал", price:"1.5 сая ₮-с",
-    desc:"Аппаратыг хуваан төлөх боломжтой.",
+  { id:"ortho", ico:"😁", name:"Гажиг засал", price:"1,500,000₮-өөс",
+    desc:"Аппаратын төлбөрийг хувааж төлж болно.",
     items:[["Оношилгоо (модел хэмжилт)","100,000₮"],
            ["Металл аппарат","1,500,000₮"],
            ["Сафир аппарат","1,800,000₮"],
            ["Шаазан аппарат","2,000,000₮"],
            ["Тунгалаг аппарат","1,800,000–2,500,000₮"]] },
-  { id:"crown", ico:"👑", name:"Бүрээс, хиймэл шүд", price:"100,000₮-с",
-    desc:"Түр бүрээснээс циркон хүртэл.",
+  { id:"crown", ico:"👑", name:"Бүрээс, хиймэл шүд", price:"100,000₮-өөс",
+    desc:"Түр бүрээснээс циркон бүрээс хүртэл.",
     items:[["Циркон (цул шаазан) бүрээс","850,000₮"],
            ["Металл шаазан бүрээс","650,000₮"],
            ["Металл бүрээс","350,000₮"],
-           ["Авагддаг шүдэлбэр","100,000₮-с"]] },
-  { id:"cosmetic", ico:"✨", name:"Гоо сайхан", price:"25,000₮-с",
+           ["Авагддаг шүдэлбэр","100,000₮-өөс"]] },
+  { id:"cosmetic", ico:"✨", name:"Гоо сайхан", price:"25,000₮-өөс",
     desc:"Цайруулалт, шигтгээ, пааландалт.",
     items:[["Шүд цайруулах (Япон Sato)","250,000₮"],
            ["Шүд пааландах","100,000–150,000₮"],
@@ -591,7 +629,7 @@ document.getElementById("serviceCards").innerHTML = SERVICES.map(s=>`
     </details>
     <div class="card-row">
       <span class="price">${s.price}</span>
-      <button class="go" onclick="startBooking('${s.id}')">Цаг авах</button>
+      <button class="go" onclick="startBooking('${s.id}')">Цаг захиалах</button>
     </div>
   </div>`).join("");
 
@@ -601,9 +639,11 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
 /* ═══════════ ЗАХИАЛГЫН ВИДЖЕТ ═══════════ */
-const state={step:1,serviceId:"prevent",date:DATES[0].iso,time:null,name:"",phone:"",done:null};
+const state={step:1,serviceId:"prevent",date:DATES[0].iso,time:null,name:"",phone:"",done:null,err:""};
+/* Хэрэглэгчийн бичсэн утгыг HTML-д оруулахын өмнө цэвэрлэнэ */
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-function startBooking(id){ state.serviceId=id; state.step=1; state.done=null; render();
+function startBooking(id){ state.serviceId=id; state.step=2; state.done=null; state.err=""; render();
   document.getElementById("booking").scrollIntoView({behavior:"smooth"}); }
 
 function render(){
@@ -616,12 +656,12 @@ function render(){
     root.innerHTML=`<div class="success">
       <div style="font-size:34px;color:var(--spark)">✦</div>
       <h3>Хүсэлт хүлээн авлаа</h3>
-      <p style="font-size:14.5px;color:var(--ink-soft);max-width:460px;margin:0 auto">
-        <b>${state.done.name}</b> танд <b>${dObj.label} (${dObj.day})</b> өдрийн <b>${state.done.time}</b> цагт
-        <b>${svc.name}</b> цаг хүссэнийг тань бүртгэлээ. Лавлагаа: <b>${state.done.ref}</b>.
-        Цаг хараахан батлагдаагүй. Манай зөвлөх <b>${state.done.phone}</b> дугаарт залгаж баталгаажуулна.</p>
+      <p style="font-size:14.5px;color:var(--ink-soft);max-width:480px;margin:0 auto;line-height:1.75">
+        <b>${esc(state.done.name)}</b>, таны хүсэлтийг бүртгэлээ.<br>
+        ${svc.name}, <b>${dObj.label} (${dObj.day}) ${state.done.time}</b>. Лавлагааны дугаар: <b>${esc(state.done.ref)}</b>.<br>
+        Цаг хараахан баталгаажаагүй. Ресепшн ажлын цагаар <b>${esc(state.done.phone)}</b> дугаарт залгаж баталгаажуулна.</p>
       <button class="btn btn-line" style="margin-top:20px"
-        onclick="state.done=null;state.step=1;state.time=null;render()">Өөр цаг захиалах</button>
+        onclick="state.done=null;state.step=1;state.time=null;state.err='';render()">Өөр цаг захиалах</button>
     </div>`;
     return;
   }
@@ -645,7 +685,7 @@ function render(){
     body=`<p class="lbl">Өдөр сонгох</p>
       <div class="days">${DATES.map(d=>`<button class="day ${d.iso===state.date?"sel":""}"
         onclick="state.date='${d.iso}';state.time=null;render()"><small>${d.day}</small><b>${d.label}</b></button>`).join("")}</div>
-      <p class="lbl">Хүссэн цаг ${dObj.sat?"(Бямба: 10:00–16:00)":""}</p>
+      <p class="lbl">Хүссэн цаг ${dObj.sat?"(Бямба: 10:00–16:00)":"(09:00–18:00)"}</p>
       <div class="slots">${slotsFor(dObj).map(t=>{
         const b=busy.has(t), on=state.time===t;
         return `<button class="slot ${b?"busy":""} ${on?"sel":""}" ${b?"disabled":""}
@@ -658,58 +698,68 @@ function render(){
   if(state.step===3){
     body=`<div class="summary"><b>${svc.name}</b> · <span class="price" style="font-size:14px">${svc.price}</span><br>
         ${dObj.label} (${dObj.day}) · <b>${state.time}</b></div>
-      <div class="field"><p class="lbl">Таны нэр</p>
-        <input id="fName" value="${state.name}" placeholder="Овгийн эхний үсэг. Нэр"></div>
-      <div class="field"><p class="lbl">Утасны дугаар</p>
-        <input id="fPhone" value="${state.phone}" inputmode="numeric" placeholder="8 оронтой дугаар"></div>
+      ${state.err?`<div class="form-err" role="alert">${esc(state.err)}</div>`:""}
+      <div class="field"><label class="lbl" for="fName" style="display:block">Таны нэр</label>
+        <input id="fName" value="${esc(state.name)}" maxlength="80" autocomplete="name" placeholder="Жишээ: Б. Энхжин" oninput="state.name=this.value"></div>
+      <div class="field"><label class="lbl" for="fPhone" style="display:block">Утасны дугаар</label>
+        <input id="fPhone" value="${esc(state.phone)}" inputmode="numeric" maxlength="9" autocomplete="tel" placeholder="8 оронтой дугаар" oninput="state.phone=this.value"></div>
       <div style="position:absolute;left:-9999px" aria-hidden="true">
         <input id="fWebsite" tabindex="-1" autocomplete="off"></div>
       <div class="btn-row">
-        <button class="btn btn-line" onclick="state.step=2;render()">← Буцах</button>
+        <button class="btn btn-line" onclick="state.err='';state.step=2;render()">← Буцах</button>
         <button class="btn btn-main" id="fSend" onclick="submitBooking()">Хүсэлт илгээх</button>
       </div>`;
   }
   root.innerHTML=`<div class="book-card">${stepHdr}<div class="book-body">${body}</div></div>`;
 }
 
-async function submitBooking(){
-  const name=document.getElementById("fName").value.trim();
-  const phone=document.getElementById("fPhone").value.replace(/[-\s]/g,"");
-  if(!name){alert("Нэрээ оруулна уу.");return;}
-  if(!/^\d{8}$/.test(phone)){alert("Утасны дугаар 8 оронтой байх ёстой.");return;}
-  state.name=name; state.phone=phone;
+function fail(msg){ state.err=msg; render(); const e=document.querySelector(".form-err"); if(e) e.scrollIntoView({block:"center",behavior:"smooth"}); }
 
-  const CALL="Та 8081-0058 дугаарт залгаж цагаа авна уу.";
-  const btn=document.getElementById("fSend");
+async function submitBooking(){
+  const name=document.getElementById("fName").value.trim().replace(/\s+/g," ");
+  const phone=document.getElementById("fPhone").value.replace(/[-\s]/g,"");
   const website=document.getElementById("fWebsite").value;
+  state.name=name; state.phone=phone;
+  if(name.length<2) return fail("Нэрээ бичнэ үү.");
+  if(!/^\d{8}$/.test(phone)) return fail("Утасны дугаар 8 оронтой байх ёстой.");
+
+  const CALL=" 8081-0058 дугаарт залгаж цагаа авна уу.";
+  const btn=document.getElementById("fSend");
   btn.disabled=true; btn.textContent="Илгээж байна…";
-  let ref=null;
+  let out={}, status=0;
   try{
     const res=await fetch(BOOKING_URL,{
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        service_code:state.serviceId,
-        preferred_date:state.date,
-        preferred_time:state.time,
-        name:state.name,
-        phone:state.phone,
-        website:website
-      })
+      body:JSON.stringify({ service_code:state.serviceId, preferred_date:state.date, preferred_time:state.time,
+                            name:state.name, phone:state.phone, website:website })
     });
-    const out=await res.json().catch(()=>({}));
-    if(res.status===429){ alert("Энэ дугаараас дөнгөж сая хүсэлт ирсэн байна. Хэдэн минутын дараа дахин оролдоно уу. "+CALL); }
-    else if(out.code==="slot"){ alert("Сонгосон өдөр, цаг тохирохгүй байна. Өөр цаг сонгоно уу."); }
-    else if(!res.ok || !out.ok){ alert("Хүсэлт илгээхэд саатал гарлаа. "+CALL); }
-    else ref=out.ref;
-  }catch(e){
-    alert("Хүсэлт илгээхэд саатал гарлаа. "+CALL);
-  }
-  if(!ref){ btn.disabled=false; btn.textContent="Хүсэлт илгээх"; return; }
+    status=res.status; out=await res.json().catch(()=>({}));
+  }catch(e){ return fail("Интернэт холболтоо шалгаад дахин оролдоно уу. Эсвэл"+CALL); }
 
-  state.done={ ...state, ref:ref };
-  render();
+  if(status===200 && out.ok){ state.err=""; state.done={ ...state, ref:out.ref }; render(); return; }
+  if(status===429) return fail("Энэ дугаараас саяхан хүсэлт ирсэн байна. Хэдэн минутын дараа дахин оролдох эсвэл"+CALL);
+  if(out.code==="slot")  return fail("Сонгосон өдөр, цаг тохирохгүй байна. Буцаж өөр цаг сонгоно уу.");
+  if(out.code==="name")  return fail("Нэрээ зөв бичнэ үү.");
+  if(out.code==="phone") return fail("Утасны дугаар 8 оронтой байх ёстой.");
+  return fail("Хүсэлт илгээгдсэнгүй."+CALL);
 }
+
+/* ═══════════ ЦЭС ═══════════ */
+const menu=document.getElementById("menu"), burger=document.getElementById("burger");
+burger.addEventListener("click",()=>{ const o=menu.classList.toggle("open"); burger.setAttribute("aria-expanded",o); });
+menu.addEventListener("click",e=>{ if(e.target.closest("a")){ menu.classList.remove("open"); burger.setAttribute("aria-expanded","false"); } });
+/* Одоо харагдаж буй хэсгийг цэсэнд тодруулна */
+const navLinks=[...menu.querySelectorAll('a[href^="#"]:not(.btn)')];
+const spy=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting) navLinks.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id));
+}),{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("section[id]").forEach(sec=>spy.observe(sec));
+/* Утсан дээрх хөвдөг товч: захиалгын хэсэг, хаягийн хэсэгт давхцахгүй */
+const fab=document.getElementById("fab");
+const fabIO=new IntersectionObserver(es=>{ es.forEach(e=>e.target._v=e.isIntersecting);
+  fab.style.visibility=[...document.querySelectorAll("#booking,#contact")].some(x=>x._v)?"hidden":"visible"; },{threshold:.05});
+document.querySelectorAll("#booking,#contact").forEach(x=>fabIO.observe(x));
 
 render();
 </script>
