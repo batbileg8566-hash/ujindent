@@ -2,6 +2,11 @@
 <html lang="mn">
 <head>
 <meta charset="UTF-8">
+<!-- Аюулгүй байдал: хуудас зөвхөн доорх эх үүсвэрээс ачаална, захиалгын өгөгдлийг
+     зөвхөн submit-booking функц рүү илгээнэ. Turnstile асаахад script-src, frame-src-д
+     https://challenges.cloudflare.com нэмнэ. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com; connect-src https://weaibivwceugrmlihqua.supabase.co; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Үжин Дент — Шүд, амны хөндийн эмнэлэг | Хан-Уул, Нисэх</title>
 <meta name="description" content="Үжин Дент (UJiN DeNT) — шүд, амны хөндийн оношилгоо, эмчилгээ, урьдчилан сэргийлэлт. VATECH рентген, хүүхдийн эмчилгээ, онлайн цаг захиалга. Хан-Уул, Нисэх, Хан Плаза 3 давхарт. Утас: 8081-0058.">
@@ -488,10 +493,10 @@
 <div class="fab" id="fab"><a class="btn btn-main" href="#booking">Цаг захиалах →</a></div>
 
 <script>
-/* ═══════════ ҮҮЛЭН ХОЛБОЛТ (бөглөвөл захиалга бодитоор илгээгдэнэ) ═══════════
-   Supabase Cloud төсөл үүсгээд cloud-booking.sql-ийг ажиллуулсны дараа:      */
-const CLOUD_URL = "";       // жишээ: "https://abcdefgh.supabase.co"
-const CLOUD_ANON_KEY = "";  // Settings → API → anon public түлхүүр
+/* ═══════════ ҮҮЛЭН ХОЛБОЛТ ═══════════
+   Захиалгын хүсэлт submit-booking функц рүү очно. Функц талбар, давтамж,
+   давхардлыг шалгаад booking_inbox-д бичнэ. Энд түлхүүр, нууц байхгүй.   */
+const BOOKING_URL = "https://weaibivwceugrmlihqua.supabase.co/functions/v1/submit-booking";
 
 /* ═══════════ ҮЙЛЧИЛГЭЭ — эмнэлгийн албан ёсны тарифаас (2026) ═══════════ */
 const SERVICES = [
@@ -557,7 +562,8 @@ function buildDates(){
   for(let i=1;i<=9 && out.length<7;i++){
     const d=new Date(base); d.setDate(base.getDate()+i);
     if(d.getDay()===0) continue;
-    out.push({ iso:d.toISOString().slice(0,10), label:(d.getMonth()+1)+"/"+d.getDate(),
+    const iso=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    out.push({ iso:iso, label:(d.getMonth()+1)+"/"+d.getDate(),
                day:DAY_MN[d.getDay()], sat:d.getDay()===6 });
   }
   return out;
@@ -569,11 +575,8 @@ function slotsFor(dateObj){
   const s=[]; for(let h=a;h<b;h++){s.push(String(h).padStart(2,"0")+":00",String(h).padStart(2,"0")+":30");}
   return s;
 }
-/* Backend холбогдоход энэ функцийг Supabase fetch-ээр солино */
-function busyFor(dateIso){
-  const seed=[...dateIso].reduce((s,c)=>s+c.charCodeAt(0),0);
-  return new Set(slotsFor(DATES.find(d=>d.iso===dateIso)||DATES[0]).filter((_,i)=>(seed*(i+3))%7<2));
-}
+/* Вэбсайт эмнэлгийн хуваарийг мэдэхгүй. Зочин хүссэн цагаа сонгоно, ресепшн утсаар батална. */
+function busyFor(dateIso){ return new Set(); }
 
 const tick=document.getElementById("tick");
 tick.innerHTML+=tick.innerHTML;
@@ -612,11 +615,11 @@ function render(){
   if(state.done){
     root.innerHTML=`<div class="success">
       <div style="font-size:34px;color:var(--spark)">✦</div>
-      <h3>Захиалга хүлээн авлаа</h3>
+      <h3>Хүсэлт хүлээн авлаа</h3>
       <p style="font-size:14.5px;color:var(--ink-soft);max-width:460px;margin:0 auto">
         <b>${state.done.name}</b> танд <b>${dObj.label} (${dObj.day})</b> өдрийн <b>${state.done.time}</b> цагт
-        <b>${svc.name}</b> цаг бүртгэгдлээ. Лавлагаа: <b>${state.done.ref}</b>.
-        Манай зөвлөх <b>${state.done.phone}</b> дугаарт холбогдож баталгаажуулна.</p>
+        <b>${svc.name}</b> цаг хүссэнийг тань бүртгэлээ. Лавлагаа: <b>${state.done.ref}</b>.
+        Цаг хараахан батлагдаагүй. Манай зөвлөх <b>${state.done.phone}</b> дугаарт залгаж баталгаажуулна.</p>
       <button class="btn btn-line" style="margin-top:20px"
         onclick="state.done=null;state.step=1;state.time=null;render()">Өөр цаг захиалах</button>
     </div>`;
@@ -642,7 +645,7 @@ function render(){
     body=`<p class="lbl">Өдөр сонгох</p>
       <div class="days">${DATES.map(d=>`<button class="day ${d.iso===state.date?"sel":""}"
         onclick="state.date='${d.iso}';state.time=null;render()"><small>${d.day}</small><b>${d.label}</b></button>`).join("")}</div>
-      <p class="lbl">Сул цагууд ${dObj.sat?"(Бямба: 10:00–16:00)":""}</p>
+      <p class="lbl">Хүссэн цаг ${dObj.sat?"(Бямба: 10:00–16:00)":""}</p>
       <div class="slots">${slotsFor(dObj).map(t=>{
         const b=busy.has(t), on=state.time===t;
         return `<button class="slot ${b?"busy":""} ${on?"sel":""}" ${b?"disabled":""}
@@ -659,9 +662,11 @@ function render(){
         <input id="fName" value="${state.name}" placeholder="Овгийн эхний үсэг. Нэр"></div>
       <div class="field"><p class="lbl">Утасны дугаар</p>
         <input id="fPhone" value="${state.phone}" inputmode="numeric" placeholder="8 оронтой дугаар"></div>
+      <div style="position:absolute;left:-9999px" aria-hidden="true">
+        <input id="fWebsite" tabindex="-1" autocomplete="off"></div>
       <div class="btn-row">
         <button class="btn btn-line" onclick="state.step=2;render()">← Буцах</button>
-        <button class="btn btn-main" onclick="submitBooking()">Захиалга илгээх</button>
+        <button class="btn btn-main" id="fSend" onclick="submitBooking()">Хүсэлт илгээх</button>
       </div>`;
   }
   root.innerHTML=`<div class="book-card">${stepHdr}<div class="book-body">${body}</div></div>`;
@@ -674,34 +679,35 @@ async function submitBooking(){
   if(!/^\d{8}$/.test(phone)){alert("Утасны дугаар 8 оронтой байх ёстой.");return;}
   state.name=name; state.phone=phone;
 
-  /* Үүлэн booking_inbox руу илгээх — дотоод сервер минут тутам татаж авна */
-  if(CLOUD_URL && CLOUD_ANON_KEY){
-    try{
-      const res=await fetch(CLOUD_URL+"/rest/v1/booking_inbox",{
-        method:"POST",
-        headers:{
-          "apikey":CLOUD_ANON_KEY,
-          "Authorization":"Bearer "+CLOUD_ANON_KEY,
-          "Content-Type":"application/json",
-          "Prefer":"return=minimal"
-        },
-        body:JSON.stringify({
-          service_code:state.serviceId,
-          preferred_date:state.date,
-          preferred_time:state.time,
-          name:state.name,
-          phone:state.phone
-        })
-      });
-      if(!res.ok) throw new Error(await res.text());
-    }catch(e){
-      alert("Захиалга илгээхэд саатал гарлаа. Та 8081-0058 дугаарт залгаж цагаа авна уу.");
-      return;
-    }
+  const CALL="Та 8081-0058 дугаарт залгаж цагаа авна уу.";
+  const btn=document.getElementById("fSend");
+  const website=document.getElementById("fWebsite").value;
+  btn.disabled=true; btn.textContent="Илгээж байна…";
+  let ref=null;
+  try{
+    const res=await fetch(BOOKING_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        service_code:state.serviceId,
+        preferred_date:state.date,
+        preferred_time:state.time,
+        name:state.name,
+        phone:state.phone,
+        website:website
+      })
+    });
+    const out=await res.json().catch(()=>({}));
+    if(res.status===429){ alert("Энэ дугаараас дөнгөж сая хүсэлт ирсэн байна. Хэдэн минутын дараа дахин оролдоно уу. "+CALL); }
+    else if(out.code==="slot"){ alert("Сонгосон өдөр, цаг тохирохгүй байна. Өөр цаг сонгоно уу."); }
+    else if(!res.ok || !out.ok){ alert("Хүсэлт илгээхэд саатал гарлаа. "+CALL); }
+    else ref=out.ref;
+  }catch(e){
+    alert("Хүсэлт илгээхэд саатал гарлаа. "+CALL);
   }
-  /* CLOUD тохиргоо хоосон үед демо горимоор ажиллана */
+  if(!ref){ btn.disabled=false; btn.textContent="Хүсэлт илгээх"; return; }
 
-  state.done={ ...state, ref:"UJ-"+Math.floor(1000+Math.random()*9000) };
+  state.done={ ...state, ref:ref };
   render();
 }
 
